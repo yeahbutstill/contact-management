@@ -1,13 +1,12 @@
 package com.yeahbutstill.restful.controller;
 
+import com.yeahbutstill.restful.entity.User;
 import com.yeahbutstill.restful.model.RegisterUserRequest;
+import com.yeahbutstill.restful.model.UserResponse;
 import com.yeahbutstill.restful.model.WebResponse;
 import com.yeahbutstill.restful.service.UserService;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -29,6 +28,19 @@ public class UserController {
         return WebResponse
                 .<String>builder()
                 .data("OK")
+                .build();
+    }
+
+    @GetMapping(
+            path = "/users/current",
+            // ini hanya produce saja karena tidak ada request body
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<UserResponse> get(User user) {
+        UserResponse userResponse = userService.get(user);
+
+        return WebResponse.<UserResponse>builder()
+                .data(userResponse)
                 .build();
     }
 

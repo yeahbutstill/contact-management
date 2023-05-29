@@ -2,6 +2,7 @@ package com.yeahbutstill.restful.service.impl;
 
 import com.yeahbutstill.restful.entity.User;
 import com.yeahbutstill.restful.model.RegisterUserRequest;
+import com.yeahbutstill.restful.model.UserResponse;
 import com.yeahbutstill.restful.repository.UserRepository;
 import com.yeahbutstill.restful.security.BCrypt;
 import com.yeahbutstill.restful.service.UserService;
@@ -41,6 +42,18 @@ public class UserServiceImpl implements UserService {
         user.setName(request.getName());
 
         userRepository.save(user);
+    }
+
+    /**
+     * @param user 
+     * @return
+     */
+    @Override
+    public UserResponse get(User user) {
+        return UserResponse.builder()
+                .username(user.getUsername())
+                .name(user.getName())
+                .build();
     }
 
 }
