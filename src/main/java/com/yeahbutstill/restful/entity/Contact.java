@@ -22,11 +22,13 @@ public class Contact {
     private String id;
 
     @Column(name = "first_name")
+    @Size(max = 100)
     @NotEmpty
     @NotBlank
     private String firstname;
 
     @Column(name = "last_name")
+    @Size(max = 100)
     private String lastname;
 
     @Size(min = 10, max = 13)
@@ -34,6 +36,7 @@ public class Contact {
     private String phone;
 
     @Email
+    @Size(max = 100)
     private String email;
 
     @ManyToOne

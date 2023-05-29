@@ -1,25 +1,22 @@
-package com.yeahbutstill.restful.entity;
+package com.yeahbutstill.restful.model;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.util.List;
-
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "users")
-public class User {
+@Builder
+public class RegisterUserRequest {
 
-    @Id
+    @NotBlank
+    @NotEmpty
+    @Size(max = 100)
     private String username;
 
     @NotBlank
@@ -31,15 +28,5 @@ public class User {
     @NotEmpty
     @Size(max = 100)
     private String name;
-
-    @Column(unique = true)
-    @Size(max = 100)
-    private String token;
-
-    @Column(name = "token_expired_at")
-    private Long tokenExpiredAt;
-
-    @OneToMany(mappedBy = "user")
-    private List<Contact> contacts;
 
 }
