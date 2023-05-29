@@ -1,13 +1,13 @@
 package com.yeahbutstill.restful.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,6 +22,8 @@ public class Contact {
     private String id;
 
     @Column(name = "first_name")
+    @NotEmpty
+    @NotBlank
     private String firstname;
 
     @Column(name = "last_name")
@@ -37,5 +39,8 @@ public class Contact {
     @ManyToOne
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
+
+    @OneToMany(mappedBy = "contact")
+    private List<Address> addresses;
 
 }
