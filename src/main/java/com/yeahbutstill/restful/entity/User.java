@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -34,5 +36,8 @@ public class User {
 
     @Column(name = "token_expired_at")
     private Long tokenExpiredAt;
+
+    @OneToMany(mappedBy = "user")
+    private List<Contact> contacts;
 
 }
