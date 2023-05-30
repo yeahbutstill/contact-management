@@ -8,9 +8,7 @@ import com.yeahbutstill.restful.model.UserResponse;
 public interface UserService {
 
     void register(RegisterUserRequest request);
-
     UserResponse get(User user);
-
     UserResponse update(User user, UpdateUserRequest request);
 
 }

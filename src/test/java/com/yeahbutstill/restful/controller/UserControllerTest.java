@@ -152,7 +152,7 @@ class UserControllerTest {
         user.setPassword(BCrypt.hashpw("rahasia", BCrypt.gensalt()));
         user.setName("Test");
         user.setToken("test");
-        user.setTokenExpiredAt(System.currentTimeMillis() + 1_000_000_000L);
+        user.setTokenExpiredAt(System.currentTimeMillis() + 10_000_000L);
         userRepository.save(user);
 
         mockMvc.perform(
@@ -181,7 +181,7 @@ class UserControllerTest {
         user.setPassword(BCrypt.hashpw("rahasia", BCrypt.gensalt()));
         user.setName("Test");
         user.setToken("test");
-        user.setTokenExpiredAt(System.currentTimeMillis() - 1_000_000_000L);
+        user.setTokenExpiredAt(System.currentTimeMillis() - 10_000_000L);
         userRepository.save(user);
 
         mockMvc.perform(
@@ -230,7 +230,7 @@ class UserControllerTest {
         user.setPassword(BCrypt.hashpw("rahasia", BCrypt.gensalt()));
         user.setName("Test");
         user.setToken("test");
-        user.setTokenExpiredAt(System.currentTimeMillis() + 1_000_000_000L);
+        user.setTokenExpiredAt(System.currentTimeMillis() + 10_000_000L);
         userRepository.save(user);
 
         UpdateUserRequest request = new UpdateUserRequest();
