@@ -5,11 +5,9 @@ import com.yeahbutstill.restful.model.ContactResponse;
 import com.yeahbutstill.restful.model.CreateContactRequest;
 import com.yeahbutstill.restful.model.WebResponse;
 import com.yeahbutstill.restful.service.ContactService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api/contacts")
@@ -25,8 +23,22 @@ public class ContactController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
     public WebResponse<ContactResponse> create(User user, @RequestBody CreateContactRequest request) {
         ContactResponse contactResponse = contactService.create(user, request);
+
+        return WebResponse.<ContactResponse>builder()
+                .data(contactResponse)
+                .build();
+    }
+
+    @GetMapping(
+            path = "/{contactId}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<ContactResponse> get(User user, @PathVariable("contactId") String contactId) {
+        ContactResponse contactResponse = contactService.get(user, contactId);
 
         return WebResponse.<ContactResponse>builder()
                 .data(contactResponse)

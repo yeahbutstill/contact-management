@@ -7,8 +7,10 @@ import com.yeahbutstill.restful.model.CreateContactRequest;
 import com.yeahbutstill.restful.repository.ContactRepository;
 import com.yeahbutstill.restful.service.ContactService;
 import com.yeahbutstill.restful.service.ValidationService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
 
@@ -35,8 +37,8 @@ public class ContactServiceImpl implements ContactService {
 
         Contact contact = new Contact();
         contact.setId(UUID.randomUUID().toString());
-        contact.setFirstname(request.getFirstName());
-        contact.setLastname(request.getLastName());
+        contact.setFirstName(request.getFirstName());
+        contact.setLastName(request.getLastName());
         contact.setEmail(request.getEmail());
         contact.setPhone(request.getPhone());
         contact.setUser(user);
@@ -46,11 +48,25 @@ public class ContactServiceImpl implements ContactService {
         return toContactResponse(contact);
     }
 
+    /**
+     * @param user 
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public ContactResponse get(User user, String id) {
+        Contact contact = contactRepository.findFirstByUserAndId(user, id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact not found"));
+
+        return toContactResponse(contact);
+    }
+
     private ContactResponse toContactResponse(Contact contact) {
         return ContactResponse.builder()
                 .id(contact.getId())
-                .firstName(contact.getFirstname())
-                .lastName(contact.getLastname())
+                .firstName(contact.getFirstName())
+                .lastName(contact.getLastName())
                 .email(contact.getEmail())
                 .phone(contact.getPhone())
                 .build();
