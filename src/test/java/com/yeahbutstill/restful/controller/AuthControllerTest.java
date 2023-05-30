@@ -146,7 +146,7 @@ class AuthControllerTest {
         user.setUsername("yeahbutstill");
         user.setPassword(BCrypt.hashpw("rahasiabanget", BCrypt.gensalt()));
         user.setToken("token-yeahbutstill-30day");
-        user.setTokenExpiredAt(System.currentTimeMillis() + 10_000_000L);
+        user.setTokenExpiredAt(System.currentTimeMillis() + 1_000_000L);
         userRepository.save(user);
 
         mockMvc.perform(

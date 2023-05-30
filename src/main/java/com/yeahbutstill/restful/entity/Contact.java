@@ -18,7 +18,6 @@ import java.util.List;
 public class Contact {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @Column(name = "first_name")
@@ -31,8 +30,7 @@ public class Contact {
     @Size(max = 100)
     private String lastname;
 
-    @Size(min = 10, max = 13)
-    @PositiveOrZero
+    @Size(max = 100)
     private String phone;
 
     @Email
