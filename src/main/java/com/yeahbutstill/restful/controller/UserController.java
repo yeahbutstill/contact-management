@@ -2,6 +2,7 @@ package com.yeahbutstill.restful.controller;
 
 import com.yeahbutstill.restful.entity.User;
 import com.yeahbutstill.restful.model.RegisterUserRequest;
+import com.yeahbutstill.restful.model.UpdateUserRequest;
 import com.yeahbutstill.restful.model.UserResponse;
 import com.yeahbutstill.restful.model.WebResponse;
 import com.yeahbutstill.restful.service.UserService;
@@ -9,7 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/api/users")
 public class UserController {
 
     private final UserService userService;
@@ -19,7 +20,6 @@ public class UserController {
     }
 
     @PostMapping(
-            path = "/users",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -32,12 +32,25 @@ public class UserController {
     }
 
     @GetMapping(
-            path = "/users/current",
+            path = "/current",
             // ini hanya produce saja karena tidak ada request body
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public WebResponse<UserResponse> get(User user) {
         UserResponse userResponse = userService.get(user);
+
+        return WebResponse.<UserResponse>builder()
+                .data(userResponse)
+                .build();
+    }
+
+    @PatchMapping(
+            path = "/current",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<UserResponse> update(User user, @RequestBody UpdateUserRequest request) {
+        UserResponse userResponse = userService.update(user, request);
 
         return WebResponse.<UserResponse>builder()
                 .data(userResponse)
