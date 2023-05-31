@@ -6,6 +6,7 @@ import com.yeahbutstill.restful.entity.User;
 import com.yeahbutstill.restful.model.LoginUserRequest;
 import com.yeahbutstill.restful.model.TokenResponse;
 import com.yeahbutstill.restful.model.WebResponse;
+import com.yeahbutstill.restful.repository.ContactRepository;
 import com.yeahbutstill.restful.repository.UserRepository;
 import com.yeahbutstill.restful.security.BCrypt;
 import lombok.SneakyThrows;
@@ -36,8 +37,12 @@ class AuthControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private ContactRepository contactRepository;
+
     @BeforeEach
     void setup() {
+        contactRepository.deleteAll();
         userRepository.deleteAll();
     }
 

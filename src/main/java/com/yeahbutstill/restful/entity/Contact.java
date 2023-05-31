@@ -37,7 +37,7 @@ public class Contact {
     @Size(max = 100)
     private String email;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
 
