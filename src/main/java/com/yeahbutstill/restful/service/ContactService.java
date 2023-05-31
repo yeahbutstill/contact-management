@@ -10,5 +10,6 @@ public interface ContactService {
     ContactResponse create(User user, CreateContactRequest request);
     ContactResponse get(User user, String id);
     ContactResponse update(User user, UpdateContactRequest request);
+    void delete(User user, String contactId);
 
 }

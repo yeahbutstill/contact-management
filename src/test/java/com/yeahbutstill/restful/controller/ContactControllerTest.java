@@ -235,4 +235,52 @@ class ContactControllerTest {
         });
     }
 
+    @SneakyThrows
+    @Test
+    void deleteContactNotFound() {
+        mockMvc.perform(
+                delete("/api/contacts/212wirosableng")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("X-API-TOKEN", "yeahbutstil-30day")
+        ).andExpectAll(
+                status().isNotFound(),
+                content().contentType(MediaType.APPLICATION_JSON_VALUE)
+        ).andDo(result -> {
+            WebResponse<String> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+            assertNotNull(response.getErrors());
+        });
+    }
+
+    @Test
+    @SneakyThrows
+    void deleteContactSuccess() {
+        User user = userRepository.findById("yeahbutstill").orElseThrow(() -> new RuntimeException("User not found"));
+
+        Contact contact = new Contact();
+        contact.setId(UUID.randomUUID().toString());
+        contact.setUser(user);
+        contact.setFirstName("Dani");
+        contact.setLastName("Setiawan");
+        contact.setEmail("dani@yeahbutstill.com");
+        contact.setPhone("+6281234567890");
+        contactRepository.save(contact);
+
+        mockMvc.perform(
+                delete("/api/contacts/" + contact.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("X-API-TOKEN", "yeahbutstil-30day")
+        ).andExpectAll(
+                status().isOk(),
+                content().contentType(MediaType.APPLICATION_JSON_VALUE)
+        ).andDo(result -> {
+            WebResponse<String> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+            assertNull(response.getErrors());
+            assertEquals("OK", response.getData());
+            assertFalse(contactRepository.existsById(contact.getId()));
+        });
+
+    }
+
 }
