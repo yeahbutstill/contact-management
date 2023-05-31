@@ -6,6 +6,7 @@ import com.yeahbutstill.restful.entity.Contact;
 import com.yeahbutstill.restful.entity.User;
 import com.yeahbutstill.restful.model.ContactResponse;
 import com.yeahbutstill.restful.model.CreateContactRequest;
+import com.yeahbutstill.restful.model.UpdateContactRequest;
 import com.yeahbutstill.restful.model.WebResponse;
 import com.yeahbutstill.restful.repository.ContactRepository;
 import com.yeahbutstill.restful.repository.UserRepository;
@@ -164,6 +165,73 @@ class ContactControllerTest {
             assertEquals(contact.getLastName(), response.getData().getLastName());
             assertEquals(contact.getEmail(), response.getData().getEmail());
             assertEquals(contact.getPhone(), response.getData().getPhone());
+        });
+    }
+
+    @SneakyThrows
+    @Test
+    void updateContactBadRequest() {
+        UpdateContactRequest request = new UpdateContactRequest();
+        request.setFirstName(" ");
+        request.setLastName("");
+        request.setEmail("salah");
+        request.setPhone("1");
+
+        mockMvc.perform(
+                put("/api/contacts/212wirosableng")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request))
+                        .header("X-API-TOKEN", "yeahbutstil-30day")
+        ).andExpectAll(
+                status().isBadRequest(),
+                content().contentType(MediaType.APPLICATION_JSON_VALUE)
+        ).andDo(result -> {
+            WebResponse<String> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+            assertNotNull(response.getErrors());
+        });
+
+    }
+
+    @SneakyThrows
+    @Test
+    void updateContactSuccess() {
+        User user = userRepository.findById("yeahbutstill").orElseThrow(() -> new RuntimeException("User not found"));
+
+        Contact contact = new Contact();
+        contact.setId(UUID.randomUUID().toString());
+        contact.setUser(user);
+        contact.setFirstName("Dani");
+        contact.setLastName("Setiawan");
+        contact.setEmail("dani@yeahbutstill.com");
+        contact.setPhone("+6281234567890");
+        contactRepository.save(contact);
+
+        UpdateContactRequest request = new UpdateContactRequest();
+        request.setFirstName("DaniL");
+        request.setLastName("SetiawanL");
+        request.setEmail("daniL@yeahbutstill.com");
+        request.setPhone("+6287234567890");
+
+        mockMvc.perform(
+                put("/api/contacts/" + contact.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request))
+                        .header("X-API-TOKEN", "yeahbutstil-30day")
+        ).andExpectAll(
+                status().isOk(),
+                content().contentType(MediaType.APPLICATION_JSON_VALUE)
+        ).andDo(result -> {
+            WebResponse<ContactResponse> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+            assertNull(response.getErrors());
+            assertNotNull(response.getData());
+            assertEquals(request.getFirstName(), response.getData().getFirstName());
+            assertEquals(request.getLastName(), response.getData().getLastName());
+            assertEquals(request.getEmail(), response.getData().getEmail());
+            assertEquals(request.getPhone(), response.getData().getPhone());
+
+            assertTrue(contactRepository.existsById(response.getData().getId()));
         });
     }
 

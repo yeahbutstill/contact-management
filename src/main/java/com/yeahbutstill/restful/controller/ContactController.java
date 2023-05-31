@@ -3,6 +3,7 @@ package com.yeahbutstill.restful.controller;
 import com.yeahbutstill.restful.entity.User;
 import com.yeahbutstill.restful.model.ContactResponse;
 import com.yeahbutstill.restful.model.CreateContactRequest;
+import com.yeahbutstill.restful.model.UpdateContactRequest;
 import com.yeahbutstill.restful.model.WebResponse;
 import com.yeahbutstill.restful.service.ContactService;
 import org.springframework.http.HttpStatus;
@@ -45,5 +46,22 @@ public class ContactController {
                 .build();
     }
 
+    @PutMapping(
+            path = "/{contactId}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @ResponseBody
+    public WebResponse<ContactResponse> update(User user,
+                                               @RequestBody UpdateContactRequest request,
+                                               @PathVariable("contactId") String contactId) {
+        request.setId(contactId);
+
+        ContactResponse contactResponse = contactService.update(user, request);
+
+        return WebResponse.<ContactResponse>builder()
+                .data(contactResponse)
+                .build();
+    }
 
 }

@@ -4,6 +4,7 @@ import com.yeahbutstill.restful.entity.Contact;
 import com.yeahbutstill.restful.entity.User;
 import com.yeahbutstill.restful.model.ContactResponse;
 import com.yeahbutstill.restful.model.CreateContactRequest;
+import com.yeahbutstill.restful.model.UpdateContactRequest;
 import com.yeahbutstill.restful.repository.ContactRepository;
 import com.yeahbutstill.restful.service.ContactService;
 import com.yeahbutstill.restful.service.ValidationService;
@@ -58,6 +59,28 @@ public class ContactServiceImpl implements ContactService {
     public ContactResponse get(User user, String id) {
         Contact contact = contactRepository.findFirstByUserAndId(user, id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact not found"));
+
+        return toContactResponse(contact);
+    }
+
+    /**
+     * @param user 
+     * @param request
+     * @return
+     */
+    @Override
+    @Transactional
+    public ContactResponse update(User user, UpdateContactRequest request) {
+        validationService.validate(request);
+
+        Contact contact = contactRepository.findFirstByUserAndId(user, request.getId()).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact not found"));
+
+        contact.setFirstName(request.getFirstName());
+        contact.setLastName(request.getLastName());
+        contact.setEmail(request.getEmail());
+        contact.setPhone(request.getPhone());
+        contactRepository.save(contact);
 
         return toContactResponse(contact);
     }
