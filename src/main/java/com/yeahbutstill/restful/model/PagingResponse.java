@@ -5,16 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class WebResponse<T> {
+public class PagingResponse {
 
-    private T data;
-    private List<String> errors;
-    private PagingResponse paging;
+    private Integer currentPage;
+    private Integer totalPage;
+    private Integer size;
 
 }
