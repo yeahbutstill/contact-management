@@ -8,7 +8,6 @@ import com.yeahbutstill.restful.repository.UserRepository;
 import com.yeahbutstill.restful.security.BCrypt;
 import com.yeahbutstill.restful.service.UserService;
 import com.yeahbutstill.restful.service.ValidationService;
-import jakarta.validation.Validator;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

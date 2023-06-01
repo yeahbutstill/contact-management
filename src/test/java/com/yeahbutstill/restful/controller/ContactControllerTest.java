@@ -8,6 +8,7 @@ import com.yeahbutstill.restful.model.ContactResponse;
 import com.yeahbutstill.restful.model.CreateContactRequest;
 import com.yeahbutstill.restful.model.UpdateContactRequest;
 import com.yeahbutstill.restful.model.WebResponse;
+import com.yeahbutstill.restful.repository.AddressRepository;
 import com.yeahbutstill.restful.repository.ContactRepository;
 import com.yeahbutstill.restful.repository.UserRepository;
 import com.yeahbutstill.restful.security.BCrypt;
@@ -48,6 +49,7 @@ class ContactControllerTest {
 
     @BeforeEach
     void setup() {
+        addressRepository.deleteAll();
         contactRepository.deleteAll();
         userRepository.deleteAll();
 
@@ -61,6 +63,8 @@ class ContactControllerTest {
     }
 
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    @Autowired
+    private AddressRepository addressRepository;
 
     public static String generateRandomString(int length) {
         Random random = new Random();

@@ -2,8 +2,10 @@ package com.yeahbutstill.restful.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yeahbutstill.restful.entity.Contact;
 import com.yeahbutstill.restful.entity.User;
 import com.yeahbutstill.restful.model.*;
+import com.yeahbutstill.restful.repository.AddressRepository;
 import com.yeahbutstill.restful.repository.ContactRepository;
 import com.yeahbutstill.restful.repository.UserRepository;
 import com.yeahbutstill.restful.security.BCrypt;
@@ -39,10 +41,31 @@ class UserControllerTest {
     @Autowired
     private ContactRepository contactRepository;
 
+    @Autowired
+    private AddressRepository addressRepository;
+
     @BeforeEach
     void setup() {
+        addressRepository.deleteAll();
         contactRepository.deleteAll();
         userRepository.deleteAll();
+
+        User user = new User();
+        user.setUsername("yeahbutstill");
+        user.setPassword(BCrypt.hashpw("rahasia", BCrypt.gensalt()));
+        user.setName("Dani");
+        user.setToken("yeahbutstill30days");
+        user.setTokenExpiredAt(System.currentTimeMillis() + 1_000_000);
+        userRepository.save(user);
+
+        Contact contact = new Contact();
+        contact.setId("yeahbutstill");
+        contact.setUser(user);
+        contact.setFirstName("Maya");
+        contact.setLastName("Setiawan");
+        contact.setEmail("maya@yeahbutstill.com");
+        contact.setPhone("081234567890");
+        contactRepository.save(contact);
     }
 
     @SneakyThrows
