@@ -47,7 +47,7 @@ class UserControllerTest {
 
     @SneakyThrows
     @Test
-    void testRegisterSuccess() {
+    void registerSuccess() {
         RegisterUserRequest request = new RegisterUserRequest();
         request.setUsername("test");
         request.setPassword("rahasia");
@@ -69,7 +69,7 @@ class UserControllerTest {
 
     @SneakyThrows
     @Test
-    void testRegisterBadRequest() {
+    void registerBadRequest() {
         RegisterUserRequest request = new RegisterUserRequest();
         request.setUsername("    ");
         request.setPassword("    ");
@@ -91,7 +91,7 @@ class UserControllerTest {
 
     @SneakyThrows
     @Test
-    void testRegisterDuplicate() {
+    void registerDuplicate() {
         User user = new User();
         user.setUsername("test");
         user.setPassword(BCrypt.hashpw("rahasia", BCrypt.gensalt()));

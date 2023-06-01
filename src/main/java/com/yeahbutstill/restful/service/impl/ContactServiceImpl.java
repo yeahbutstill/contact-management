@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class ContactServiceImpl implements ContactService {
@@ -132,6 +131,7 @@ public class ContactServiceImpl implements ContactService {
             if (Objects.nonNull(request.getPhone())) {
                 predicates.add(builder.like(root.get("phone"), "%" + request.getPhone() + "%"));
             }
+
             return query.where(predicates.toArray(new Predicate[]{})).getRestriction();
         };
 
