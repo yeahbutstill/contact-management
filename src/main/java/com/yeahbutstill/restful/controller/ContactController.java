@@ -24,7 +24,6 @@ public class ContactController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     public WebResponse<ContactResponse> create(User user, @RequestBody CreateContactRequest request) {
         ContactResponse contactResponse = contactService.create(user, request);
@@ -51,7 +50,6 @@ public class ContactController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    @ResponseBody
     public WebResponse<ContactResponse> update(User user,
                                                @RequestBody UpdateContactRequest request,
                                                @PathVariable("contactId") String contactId) {
@@ -68,7 +66,6 @@ public class ContactController {
             path = "/{contactId}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    @ResponseBody
     public WebResponse<String> delete(User user, @PathVariable("contactId") String contactId) {
         contactService.delete(user, contactId);
 

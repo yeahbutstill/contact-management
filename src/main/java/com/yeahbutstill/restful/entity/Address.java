@@ -38,7 +38,7 @@ public class Address {
     @Size(max = 10)
     private String postalCode;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contact_id", referencedColumnName = "id")
     private Contact contact;
 

@@ -2,6 +2,7 @@ package com.yeahbutstill.restful.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yeahbutstill.restful.entity.Address;
 import com.yeahbutstill.restful.entity.Contact;
 import com.yeahbutstill.restful.entity.User;
 import com.yeahbutstill.restful.model.AddressResponse;
@@ -17,8 +18,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Random;
 import java.util.UUID;
@@ -129,6 +132,62 @@ class AddressControllerTest {
             assertEquals(request.getCountry(), response.getData().getCountry());
 
             assertTrue(addressRepository.existsById(response.getData().getId()));
+        });
+    }
+
+    @Test
+    @SneakyThrows
+    void getAddressNotFound() {
+        mockMvc.perform(
+                get("/api/contacts/yeahbutstill/addresses/test")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header("X-API-TOKEN", "yeahbutstill30days")
+        ).andExpectAll(
+                status().isNotFound(),
+                content().contentType(MediaType.APPLICATION_JSON_VALUE)
+        ).andDo(result -> {
+            WebResponse<String> response = objectMapper
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+            assertNotNull(response.getErrors());
+            assertNull(response.getData());
+        });
+    }
+
+    @Test
+    @SneakyThrows
+    void getAddressSuccess() {
+        Contact contact = contactRepository.findById("yeahbutstill").orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found"));
+
+        Address address = new Address();
+        address.setId(UUID.randomUUID().toString());
+        address.setContact(contact);
+        address.setStreet("Jl. Raya");
+        address.setCity("Bandung");
+        address.setProvince("Jawa Barat");
+        address.setPostalCode("40211");
+        address.setCountry("Indonesia");
+        addressRepository.save(address);
+
+        mockMvc.perform(
+                get("/api/contacts/" + contact.getId() + "/addresses/" + address.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header("X-API-TOKEN", "yeahbutstill30days")
+        ).andExpectAll(
+                status().isOk(),
+                content().contentType(MediaType.APPLICATION_JSON_VALUE)
+        ).andDo(result -> {
+            WebResponse<AddressResponse> response = objectMapper
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+            assertNull(response.getErrors());
+            assertNotNull(response.getData());
+            assertNotNull(response.getData().getId());
+            assertEquals(address.getId(), response.getData().getId());
+            assertEquals(address.getStreet(), response.getData().getStreet());
+            assertEquals(address.getCity(), response.getData().getCity());
+            assertEquals(address.getProvince(), response.getData().getProvince());
+            assertEquals(address.getPostalCode(), response.getData().getPostalCode());
+            assertEquals(address.getCountry(), response.getData().getCountry());
         });
     }
 
