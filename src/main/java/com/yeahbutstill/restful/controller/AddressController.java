@@ -68,4 +68,18 @@ public class AddressController {
                 .build();
     }
 
+    @DeleteMapping(
+            path = "/{contactId}/addresses/{addressId}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<String> remove(User user,
+                                               @PathVariable("contactId") String contactId,
+                                               @PathVariable("addressId") String addressId) {
+        addressService.remove(user, contactId, addressId);
+
+        return WebResponse.<String>builder()
+                .data("OK")
+                .build();
+    }
+
 }

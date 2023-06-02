@@ -263,4 +263,54 @@ class AddressControllerTest {
         });
     }
 
+    @Test
+    @SneakyThrows
+    void deleteAddressNotFound() {
+        mockMvc.perform(
+                delete("/api/contacts/yeahbutstill/addresses/test")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header("X-API-TOKEN", "yeahbutstill30days")
+        ).andExpectAll(
+                status().isNotFound(),
+                content().contentType(MediaType.APPLICATION_JSON_VALUE)
+        ).andDo(result -> {
+            WebResponse<String> response = objectMapper
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+            assertNotNull(response.getErrors());
+            assertNull(response.getData());
+        });
+    }
+
+    @Test
+    @SneakyThrows
+    void deleteAddressSuccess() {
+        Contact contact = contactRepository.findById("yeahbutstill").orElseThrow();
+
+        Address address = new Address();
+        address.setId("yeahbutstill");
+        address.setContact(contact);
+        address.setStreet("Jl. Raya Lama");
+        address.setCity("Bandung Lama");
+        address.setProvince("Jawa Barat Lama");
+        address.setPostalCode("40211 Lama");
+        address.setCountry("Indonesia Lama");
+        addressRepository.save(address);
+
+        mockMvc.perform(
+                delete("/api/contacts/" + contact.getId() + "/addresses/" + address.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header("X-API-TOKEN", "yeahbutstill30days")
+        ).andExpectAll(
+                status().isOk(),
+                content().contentType(MediaType.APPLICATION_JSON_VALUE)
+        ).andDo(result -> {
+            WebResponse<String> response = objectMapper
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+            assertNull(response.getErrors());
+            assertEquals("OK", response.getData());
+
+            assertFalse(addressRepository.existsById(address.getId()));
+        });
+    }
+
 }
