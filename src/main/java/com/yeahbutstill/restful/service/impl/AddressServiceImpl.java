@@ -5,6 +5,7 @@ import com.yeahbutstill.restful.entity.Contact;
 import com.yeahbutstill.restful.entity.User;
 import com.yeahbutstill.restful.model.AddressResponse;
 import com.yeahbutstill.restful.model.CreateAddressRequest;
+import com.yeahbutstill.restful.model.UpdateAddressRequest;
 import com.yeahbutstill.restful.repository.AddressRepository;
 import com.yeahbutstill.restful.repository.ContactRepository;
 import com.yeahbutstill.restful.service.AddressService;
@@ -71,6 +72,32 @@ public class AddressServiceImpl implements AddressService {
         Address address = addressRepository.findFirstByContactAndId(contact, addressId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Address not found"));
 
+
+        return toAddressResponse(address);
+    }
+
+    /**
+     * @param user 
+     * @param request
+     * @return
+     */
+    @Override
+    @Transactional
+    public AddressResponse update(User user, UpdateAddressRequest request) {
+        validationService.validate(request);
+
+        Contact contact = contactRepository.findFirstByUserAndId(user, request.getContactId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact not found"));
+
+        Address address = addressRepository.findFirstByContactAndId(contact, request.getAddressId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Address not found"));
+
+        address.setStreet(request.getStreet());
+        address.setCity(request.getCity());
+        address.setProvince(request.getProvince());
+        address.setCountry(request.getCountry());
+        address.setPostalCode(request.getPostalCode());
+        addressRepository.save(address);
 
         return toAddressResponse(address);
     }

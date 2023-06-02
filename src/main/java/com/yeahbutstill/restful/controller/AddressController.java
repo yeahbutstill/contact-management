@@ -3,6 +3,7 @@ package com.yeahbutstill.restful.controller;
 import com.yeahbutstill.restful.entity.User;
 import com.yeahbutstill.restful.model.AddressResponse;
 import com.yeahbutstill.restful.model.CreateAddressRequest;
+import com.yeahbutstill.restful.model.UpdateAddressRequest;
 import com.yeahbutstill.restful.model.WebResponse;
 import com.yeahbutstill.restful.service.AddressService;
 import org.springframework.http.HttpStatus;
@@ -43,6 +44,24 @@ public class AddressController {
                                             @PathVariable("contactId") String contactId,
                                             @PathVariable("addressId") String addressId) {
         AddressResponse addressResponse = addressService.get(user, contactId, addressId);
+
+        return WebResponse.<AddressResponse>builder()
+                .data(addressResponse)
+                .build();
+    }
+
+    @PutMapping(
+            path = "/{contactId}/addresses/{addressId}",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<AddressResponse> update(User user,
+                                               @PathVariable("contactId") String contactId,
+                                               @PathVariable("addressId") String addressId,
+                                               @RequestBody UpdateAddressRequest request) {
+        request.setContactId(contactId);
+        request.setAddressId(addressId);
+        AddressResponse addressResponse = addressService.update(user, request);
 
         return WebResponse.<AddressResponse>builder()
                 .data(addressResponse)

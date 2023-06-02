@@ -7,6 +7,7 @@ import com.yeahbutstill.restful.entity.Contact;
 import com.yeahbutstill.restful.entity.User;
 import com.yeahbutstill.restful.model.AddressResponse;
 import com.yeahbutstill.restful.model.CreateAddressRequest;
+import com.yeahbutstill.restful.model.UpdateAddressRequest;
 import com.yeahbutstill.restful.model.WebResponse;
 import com.yeahbutstill.restful.repository.AddressRepository;
 import com.yeahbutstill.restful.repository.ContactRepository;
@@ -188,6 +189,77 @@ class AddressControllerTest {
             assertEquals(address.getProvince(), response.getData().getProvince());
             assertEquals(address.getPostalCode(), response.getData().getPostalCode());
             assertEquals(address.getCountry(), response.getData().getCountry());
+        });
+    }
+
+    @Test
+    @SneakyThrows
+    void updateAddressBadRequest() {
+        UpdateAddressRequest request = new UpdateAddressRequest();
+        request.setAddressId(null);
+        request.setAddressId(null);
+        request.setCountry("     ");
+
+        mockMvc.perform(
+                put("/api/contacts/" + request.getContactId() + "/addresses/" + request.getAddressId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new UpdateAddressRequest()))
+                        .header("X-API-TOKEN", "yeahbutstill30days")
+        ).andExpectAll(
+                status().isBadRequest(),
+                content().contentType(MediaType.APPLICATION_JSON_VALUE)
+        ).andDo(result -> {
+            WebResponse<String> response = objectMapper
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+            assertNotNull(response.getErrors());
+            assertNull(response.getData());
+        });
+    }
+
+    @Test
+    @SneakyThrows
+    void updateAddressSuccess() {
+        Contact contact = contactRepository.findById("yeahbutstill").orElseThrow();
+
+        Address address = new Address();
+        address.setId("yeahbutstill");
+        address.setContact(contact);
+        address.setStreet("Jl. Raya Lama");
+        address.setCity("Bandung Lama");
+        address.setProvince("Jawa Barat Lama");
+        address.setPostalCode("40211 Lama");
+        address.setCountry("Indonesia Lama");
+        addressRepository.save(address);
+
+        UpdateAddressRequest request = new UpdateAddressRequest();
+        request.setStreet("Jl. Raya");
+        request.setCity("Bandung");
+        request.setProvince("Jawa Barat");
+        request.setPostalCode("40211");
+        request.setCountry("Indonesia");
+
+        mockMvc.perform(
+                put("/api/contacts/" + contact.getId() + "/addresses/" + address.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request))
+                        .header("X-API-TOKEN", "yeahbutstill30days")
+        ).andExpectAll(
+                status().isOk(),
+                content().contentType(MediaType.APPLICATION_JSON_VALUE)
+        ).andDo(result -> {
+            WebResponse<AddressResponse> response = objectMapper
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+            assertNull(response.getErrors());
+            assertNotNull(response.getData());
+            assertEquals(request.getStreet(), response.getData().getStreet());
+            assertEquals(request.getCity(), response.getData().getCity());
+            assertEquals(request.getProvince(), response.getData().getProvince());
+            assertEquals(request.getPostalCode(), response.getData().getPostalCode());
+            assertEquals(request.getCountry(), response.getData().getCountry());
+
+            assertTrue(addressRepository.existsById(response.getData().getId()));
         });
     }
 
