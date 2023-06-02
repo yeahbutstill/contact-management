@@ -24,14 +24,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Random;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.MockMvcBuilder.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -83,7 +82,7 @@ class AddressControllerTest {
         request.setCountry("     ");
 
         mockMvc.perform(
-                post("/api/contacts/" + request.getContactId()+ "/addresses")
+                post("/api/contacts/" + request.getContactId() + "/addresses")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
@@ -94,7 +93,8 @@ class AddressControllerTest {
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
             WebResponse<String> response = objectMapper
-                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+                    });
             assertNotNull(response.getErrors());
             assertNull(response.getData());
         });
@@ -122,7 +122,8 @@ class AddressControllerTest {
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
             WebResponse<AddressResponse> response = objectMapper
-                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+                    });
             assertNull(response.getErrors());
             assertNotNull(response.getData());
             assertNotNull(request.getContactId(), response.getData().getId());
@@ -148,7 +149,8 @@ class AddressControllerTest {
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
             WebResponse<String> response = objectMapper
-                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+                    });
             assertNotNull(response.getErrors());
             assertNull(response.getData());
         });
@@ -179,7 +181,8 @@ class AddressControllerTest {
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
             WebResponse<AddressResponse> response = objectMapper
-                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+                    });
             assertNull(response.getErrors());
             assertNotNull(response.getData());
             assertNotNull(response.getData().getId());
@@ -211,7 +214,8 @@ class AddressControllerTest {
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
             WebResponse<String> response = objectMapper
-                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+                    });
             assertNotNull(response.getErrors());
             assertNull(response.getData());
         });
@@ -220,7 +224,8 @@ class AddressControllerTest {
     @Test
     @SneakyThrows
     void updateAddressSuccess() {
-        Contact contact = contactRepository.findById("yeahbutstill").orElseThrow();
+        Contact contact = contactRepository.findById("yeahbutstill").orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found"));
 
         Address address = new Address();
         address.setId("yeahbutstill");
@@ -250,7 +255,8 @@ class AddressControllerTest {
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
             WebResponse<AddressResponse> response = objectMapper
-                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+                    });
             assertNull(response.getErrors());
             assertNotNull(response.getData());
             assertEquals(request.getStreet(), response.getData().getStreet());
@@ -275,7 +281,8 @@ class AddressControllerTest {
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
             WebResponse<String> response = objectMapper
-                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+                    });
             assertNotNull(response.getErrors());
             assertNull(response.getData());
         });
@@ -284,7 +291,8 @@ class AddressControllerTest {
     @Test
     @SneakyThrows
     void deleteAddressSuccess() {
-        Contact contact = contactRepository.findById("yeahbutstill").orElseThrow();
+        Contact contact = contactRepository.findById("yeahbutstill").orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found"));
 
         Address address = new Address();
         address.setId("yeahbutstill");
@@ -305,11 +313,66 @@ class AddressControllerTest {
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
             WebResponse<String> response = objectMapper
-                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+                    });
             assertNull(response.getErrors());
             assertEquals("OK", response.getData());
 
             assertFalse(addressRepository.existsById(address.getId()));
+        });
+    }
+
+    @Test
+    @SneakyThrows
+    void listAddressNotFound() {
+        mockMvc.perform(
+                get("/api/contacts/salah/addresses")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header("X-API-TOKEN", "yeahbutstill30days")
+        ).andExpectAll(
+                status().isNotFound(),
+                content().contentType(MediaType.APPLICATION_JSON_VALUE)
+        ).andDo(result -> {
+            WebResponse<String> response = objectMapper
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+                    });
+            assertNotNull(response.getErrors());
+            assertNull(response.getData());
+        });
+    }
+
+    @Test
+    @SneakyThrows
+    void listAddressSuccess() {
+        Contact contact = contactRepository.findById("yeahbutstill").orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found"));
+
+        for (int i = 0; i < 10_000; i++) {
+            Address address = new Address();
+            address.setId(UUID.randomUUID().toString());
+            address.setContact(contact);
+            address.setStreet("Jl. Raya " + i);
+            address.setCity("Bandung " + i);
+            address.setProvince("Jawa Barat " + i);
+            address.setPostalCode("40211 " + i);
+            address.setCountry("Indonesia " + i);
+            addressRepository.save(address);
+        }
+
+        mockMvc.perform(
+                get("/api/contacts/yeahbutstill/addresses")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header("X-API-TOKEN", "yeahbutstill30days")
+        ).andExpectAll(
+                status().isOk(),
+                content().contentType(MediaType.APPLICATION_JSON_VALUE)
+        ).andDo(result -> {
+            WebResponse<List<AddressResponse>> response = objectMapper
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+                    });
+            assertNull(response.getErrors());
+            assertNotNull(response.getData());
+            assertEquals(10_000, response.getData().size());
         });
     }
 

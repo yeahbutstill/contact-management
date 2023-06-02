@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/contacts")
 public class AddressController {
@@ -79,6 +81,19 @@ public class AddressController {
 
         return WebResponse.<String>builder()
                 .data("OK")
+                .build();
+    }
+
+    @GetMapping(
+            path = "/{contactId}/addresses",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<List<AddressResponse>> list(User user,
+                                                   @PathVariable("contactId") String contactId) {
+        List<AddressResponse> addressResponses = addressService.list(user, contactId);
+
+        return WebResponse.<List<AddressResponse>>builder()
+                .data(addressResponses)
                 .build();
     }
 
