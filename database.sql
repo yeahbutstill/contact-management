@@ -42,3 +42,8 @@ CREATE TABLE addresses(
 );
 
 SELECT * FROM addresses;
+
+--use this for manual test
+DELETE FROM addresses WHERE id = public.addresses.id;
+DELETE FROM contacts WHERE id = public.contacts.id;
+DELETE FROM users WHERE username = public.users.username;

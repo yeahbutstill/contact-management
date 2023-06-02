@@ -1,0 +1,36 @@
+### Register
+
+POST http://localhost:8181/api/users
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "yeahbutstill",
+  "password": "rahasial",
+  "name": "Dani"
+}
+
+### Login
+POST localhost:8181/api/auth/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "yeahbutstill",
+  "password": "rahasial"
+}
+
+### Get User
+GET localhost:8181/api/users/current
+Accept: application/json
+X-API-TOKEN:f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+
+### Update User
+PATCH localhost:8181/api/users/current
+Accept: application/json
+Content-Type: application/json
+X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+
+{
+  "name": "Dani Setiawan"
+}
