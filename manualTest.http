@@ -34,3 +34,87 @@ X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
 {
   "name": "Dani Setiawan"
 }
+
+### Create Contact
+POST localhost:8181/api/contacts
+Accept: application/json
+Content-Type: application/json
+X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+
+{
+  "firstName": "Pipit3",
+  "lastName": "Triyanti",
+  "email": "maya@yeahbutstill.com",
+  "phone": "+62877777777"
+}
+
+### List Contact
+GET localhost:8181/api/contacts
+Accept: application/json
+X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+
+### Search Contact
+GET localhost:8181/api/contacts?name=Yasmin
+Accept: application/json
+X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+
+### Get Contact Detail
+GET localhost:8181/api/contacts/cc5cc01a-635a-44ca-8c8b-f2b0b8094363
+Accept: application/json
+X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+
+### Update Contact
+PUT localhost:8181/api/contacts/cc5cc01a-635a-44ca-8c8b-f2b0b8094363
+Accept: application/json
+Content-Type: application/json
+X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+
+{
+  "firstName": "Yasmin",
+  "lastName": "Salam",
+  "email": "yasmin@yeahbutstill.com",
+  "phone": "+62877777771"
+}
+
+### Remove Contact
+DELETE localhost:8181/api/contacts/871be6ce-d030-49fa-ae20-41a0e8e5a6e4
+Accept: application/json
+X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+
+### Add Address
+POST localhost:8181/api/contacts/cc5cc01a-635a-44ca-8c8b-f2b0b8094363/addresses
+Accept: application/json
+Content-Type: application/json
+X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+
+{
+  "street": "Jalan",
+  "city": "Depok",
+  "province": "Jawa Barat",
+  "country": "Indonesia",
+  "postalCode": "16320"
+}
+
+### List Address
+GET localhost:8181/api/contacts/cc5cc01a-635a-44ca-8c8b-f2b0b8094363/addresses
+Accept: application/json
+X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+
+### Update Address
+PUT localhost:8181/api/contacts/cc5cc01a-635a-44ca-8c8b-f2b0b8094363/addresses/69cf8e15-f399-4bc6-a52c-a38feaf7cb10
+Accept: application/json
+Content-Type: application/json
+X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+
+{
+  "street": "Jalan Kemiri Jaya",
+  "city": "Depok",
+  "province": "Jawa Barat",
+  "country": "Indonesia",
+  "postalCode": "16320"
+}
+
+### Remove Address
+DELETE localhost:8181/api/contacts/cc5cc01a-635a-44ca-8c8b-f2b0b8094363/addresses/69cf8e15-f399-4bc6-a52c-a38feaf7cb10
+Accept: application/json
+X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
