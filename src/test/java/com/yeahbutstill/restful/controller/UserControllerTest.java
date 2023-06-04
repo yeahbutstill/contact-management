@@ -4,14 +4,16 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yeahbutstill.restful.entity.Contact;
 import com.yeahbutstill.restful.entity.User;
-import com.yeahbutstill.restful.model.*;
+import com.yeahbutstill.restful.model.RegisterUserRequest;
+import com.yeahbutstill.restful.model.UpdateUserRequest;
+import com.yeahbutstill.restful.model.UserResponse;
+import com.yeahbutstill.restful.model.WebResponse;
 import com.yeahbutstill.restful.repository.AddressRepository;
 import com.yeahbutstill.restful.repository.ContactRepository;
 import com.yeahbutstill.restful.repository.UserRepository;
 import com.yeahbutstill.restful.security.BCrypt;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,10 +22,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.MockMvcBuilder.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -77,7 +77,7 @@ class UserControllerTest {
         request.setName("Test");
 
         mockMvc.perform(
-                post("/api/users")
+                post("/api/v1/users")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
@@ -85,7 +85,8 @@ class UserControllerTest {
                 status().isOk()
         ).andDo(result -> {
             WebResponse<String> response = objectMapper
-                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+                    });
             assertEquals("OK", response.getData());
         });
     }
@@ -99,7 +100,7 @@ class UserControllerTest {
         request.setName("    ");
 
         mockMvc.perform(
-                post("/api/users")
+                post("/api/v1/users")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
@@ -107,7 +108,8 @@ class UserControllerTest {
                 status().isBadRequest()
         ).andDo(result -> {
             WebResponse<String> response = objectMapper
-                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+                    });
             assertNotNull(response.getErrors());
         });
     }
@@ -127,7 +129,7 @@ class UserControllerTest {
         request.setName("Test");
 
         mockMvc.perform(
-                post("/api/users")
+                post("/api/v1/users")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
@@ -135,7 +137,8 @@ class UserControllerTest {
                 status().isBadRequest()
         ).andDo(result -> {
             WebResponse<String> response = objectMapper
-                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+                    });
             assertNotNull(response.getErrors());
         });
     }
@@ -144,14 +147,15 @@ class UserControllerTest {
     @Test
     void getUserUnauthorized() {
         mockMvc.perform(
-                get("/api/users/current")
+                get("/api/v1/users/current")
                         .accept(MediaType.APPLICATION_JSON)
                         .header("X-API-TOKEN", "notfound")
         ).andExpectAll(
                 status().isUnauthorized()
         ).andDo(result -> {
             WebResponse<String> response = objectMapper.readValue(result.getResponse()
-                    .getContentAsString(), new TypeReference<>() {});
+                    .getContentAsString(), new TypeReference<>() {
+            });
 
             assertNotNull(response.getErrors());
         });
@@ -161,7 +165,7 @@ class UserControllerTest {
     @Test
     void getUserUnauthorizedTokenNotSend() {
         mockMvc.perform(
-                get("/api/users/current")
+                get("/api/v1/users/current")
                         .accept(MediaType.APPLICATION_JSON)
         ).andExpectAll(
                 status().isUnauthorized()
@@ -184,7 +188,7 @@ class UserControllerTest {
         userRepository.save(user);
 
         mockMvc.perform(
-                get("/api/users/current")
+                get("/api/v1/users/current")
                         .accept(MediaType.APPLICATION_JSON)
                         .header("X-API-TOKEN", "test")
         ).andExpectAll(
@@ -213,7 +217,7 @@ class UserControllerTest {
         userRepository.save(user);
 
         mockMvc.perform(
-                get("/api/users/current")
+                get("/api/v1/users/current")
                         .accept(MediaType.APPLICATION_JSON)
                         .header("X-API-TOKEN", "test")
         ).andExpectAll(
@@ -235,7 +239,7 @@ class UserControllerTest {
         UpdateUserRequest request = new UpdateUserRequest();
 
         mockMvc.perform(
-                patch("/api/users/current")
+                patch("/api/v1/users/current")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
@@ -266,7 +270,7 @@ class UserControllerTest {
         request.setPassword("rahasiabanget");
 
         mockMvc.perform(
-                patch("/api/users/current")
+                patch("/api/v1/users/current")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))

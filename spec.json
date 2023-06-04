@@ -1,0 +1,179 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Contact Management RESTful API",
+    "description": "OpenAPI for Contact Management RESTful API",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Yeahbutstill A.K.A Dani",
+      "email": "mayadani28@gmail.com",
+      "url": "https://wwww.github.com/yeahbutstilll"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "servers": [
+    {
+      "description": "Contact Management RESTful API",
+      "url": "http://{server.host}:{server.port}/api/v1",
+      "variables": {
+        "server.host": {
+          "description": "The host of the server",
+          "default": "localhost",
+          "enum": [
+            "localhost",
+            "yeahbutstill.com"
+          ]
+        },
+        "server.port": {
+          "default": "8181",
+          "enum": [
+            "8181",
+            "80",
+            "443"
+          ]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "summary": "",
+        "operationId": "",
+        "parameters": [
+        ],
+        "responses": {
+        }
+      }
+    },
+    "/users/current": {
+      "get": {
+        "summary": "",
+        "operationId": "",
+        "parameters": [
+        ],
+        "responses": {
+        }
+      },
+      "patch": {
+        "summary": "",
+        "operationId": "",
+        "parameters": [
+        ],
+        "responses": {
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "",
+        "operationId": "",
+        "parameters": [
+        ],
+        "responses": {
+        }
+      }
+    },
+    "/auth/logout": {
+      "delete": {
+        "summary": "",
+        "operationId": "",
+        "parameters": [
+        ],
+        "responses": {
+        }
+      }
+    },
+    "/contacts": {
+      "post": {
+        "summary": "",
+        "operationId": "",
+        "parameters": [
+        ],
+        "responses": {
+        }
+      },
+      "get": {
+        "summary": "",
+        "operationId": "",
+        "parameters": [
+        ],
+        "responses": {
+        }
+      }
+    },
+    "/contacts/{contactId}": {
+      "put": {
+        "summary": "",
+        "operationId": "",
+        "parameters": [
+        ],
+        "responses": {
+        }
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "",
+        "parameters": [
+        ],
+        "responses": {
+        }
+      },
+      "get": {
+        "summary": "",
+        "operationId": "",
+        "parameters": [
+        ],
+        "responses": {
+        }
+      }
+    },
+    "/contacts/{contactId}/addresses": {
+      "post": {
+        "summary": "",
+        "operationId": "",
+        "parameters": [
+        ],
+        "responses": {
+        }
+      },
+      "get": {
+        "summary": "",
+        "operationId": "",
+        "parameters": [
+        ],
+        "responses": {
+        }
+      }
+    },
+    "/contacts/{contactId}/addresses/{addressId}": {
+      "get": {
+        "summary": "",
+        "operationId": "",
+        "parameters": [
+        ],
+        "responses": {
+        }
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "",
+        "parameters": [
+        ],
+        "responses": {
+        }
+      },
+      "put": {
+        "summary": "",
+        "operationId": "",
+        "parameters": [
+        ],
+        "responses": {
+        }
+      }
+    }
+  }
+}

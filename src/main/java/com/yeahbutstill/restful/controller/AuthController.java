@@ -9,7 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/api/auth")
+@RequestMapping(path = "/api/v1/auth")
 public class AuthController {
 
     private final AuthService authService;

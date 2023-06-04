@@ -58,7 +58,7 @@ class AuthControllerTest {
         request.setPassword("rahasia");
 
         mockMvc.perform(
-                post("/api/auth/login")
+                post("/api/v1/auth/login")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
@@ -85,7 +85,7 @@ class AuthControllerTest {
         request.setPassword("wrong");
 
         mockMvc.perform(
-                post("/api/auth/login")
+                post("/api/v1/auth/login")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
@@ -112,7 +112,7 @@ class AuthControllerTest {
         request.setPassword("rahasia");
 
         mockMvc.perform(
-                post("/api/auth/login")
+                post("/api/v1/auth/login")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
@@ -136,7 +136,7 @@ class AuthControllerTest {
     @Test
     void logoutFailed() {
         mockMvc.perform(
-                delete("/api/auth/logout")
+                delete("/api/v1/auth/logout")
                         .accept(MediaType.APPLICATION_JSON)
         ).andExpectAll(
                 status().isUnauthorized()
@@ -159,7 +159,7 @@ class AuthControllerTest {
         userRepository.save(user);
 
         mockMvc.perform(
-                delete("/api/auth/logout")
+                delete("/api/v1/auth/logout")
                         .accept(MediaType.APPLICATION_JSON)
                         .header("X-API-TOKEN", user.getToken())
         ).andExpectAll(

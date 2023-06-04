@@ -82,7 +82,7 @@ class AddressControllerTest {
         request.setCountry("     ");
 
         mockMvc.perform(
-                post("/api/contacts/" + request.getContactId() + "/addresses")
+                post("/api/v1/contacts/" + request.getContactId() + "/addresses")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
@@ -112,7 +112,7 @@ class AddressControllerTest {
         request.setCountry("Indonesia");
 
         mockMvc.perform(
-                post("/api/contacts/" + request.getContactId() + "/addresses")
+                post("/api/v1/contacts/" + request.getContactId() + "/addresses")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
@@ -141,7 +141,7 @@ class AddressControllerTest {
     @SneakyThrows
     void getAddressNotFound() {
         mockMvc.perform(
-                get("/api/contacts/yeahbutstill/addresses/test")
+                get("/api/v1/contacts/yeahbutstill/addresses/test")
                         .accept(MediaType.APPLICATION_JSON)
                         .header("X-API-TOKEN", "yeahbutstill30days")
         ).andExpectAll(
@@ -173,7 +173,7 @@ class AddressControllerTest {
         addressRepository.save(address);
 
         mockMvc.perform(
-                get("/api/contacts/" + contact.getId() + "/addresses/" + address.getId())
+                get("/api/v1/contacts/" + contact.getId() + "/addresses/" + address.getId())
                         .accept(MediaType.APPLICATION_JSON)
                         .header("X-API-TOKEN", "yeahbutstill30days")
         ).andExpectAll(
@@ -204,7 +204,7 @@ class AddressControllerTest {
         request.setCountry("     ");
 
         mockMvc.perform(
-                put("/api/contacts/" + request.getContactId() + "/addresses/" + request.getAddressId())
+                put("/api/v1/contacts/" + request.getContactId() + "/addresses/" + request.getAddressId())
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(new UpdateAddressRequest()))
@@ -245,7 +245,7 @@ class AddressControllerTest {
         request.setCountry("Indonesia");
 
         mockMvc.perform(
-                put("/api/contacts/" + contact.getId() + "/addresses/" + address.getId())
+                put("/api/v1/contacts/" + contact.getId() + "/addresses/" + address.getId())
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
@@ -273,7 +273,7 @@ class AddressControllerTest {
     @SneakyThrows
     void deleteAddressNotFound() {
         mockMvc.perform(
-                delete("/api/contacts/yeahbutstill/addresses/test")
+                delete("/api/v1/contacts/yeahbutstill/addresses/test")
                         .accept(MediaType.APPLICATION_JSON)
                         .header("X-API-TOKEN", "yeahbutstill30days")
         ).andExpectAll(
@@ -305,7 +305,7 @@ class AddressControllerTest {
         addressRepository.save(address);
 
         mockMvc.perform(
-                delete("/api/contacts/" + contact.getId() + "/addresses/" + address.getId())
+                delete("/api/v1/contacts/" + contact.getId() + "/addresses/" + address.getId())
                         .accept(MediaType.APPLICATION_JSON)
                         .header("X-API-TOKEN", "yeahbutstill30days")
         ).andExpectAll(
@@ -326,7 +326,7 @@ class AddressControllerTest {
     @SneakyThrows
     void listAddressNotFound() {
         mockMvc.perform(
-                get("/api/contacts/salah/addresses")
+                get("/api/v1/contacts/salah/addresses")
                         .accept(MediaType.APPLICATION_JSON)
                         .header("X-API-TOKEN", "yeahbutstill30days")
         ).andExpectAll(
@@ -360,7 +360,7 @@ class AddressControllerTest {
         }
 
         mockMvc.perform(
-                get("/api/contacts/yeahbutstill/addresses")
+                get("/api/v1/contacts/yeahbutstill/addresses")
                         .accept(MediaType.APPLICATION_JSON)
                         .header("X-API-TOKEN", "yeahbutstill30days")
         ).andExpectAll(

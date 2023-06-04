@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/contacts")
+@RequestMapping("/api/v1/contacts")
 public class AddressController {
 
     private final AddressService addressService;
@@ -75,8 +75,8 @@ public class AddressController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public WebResponse<String> remove(User user,
-                                               @PathVariable("contactId") String contactId,
-                                               @PathVariable("addressId") String addressId) {
+                                      @PathVariable("contactId") String contactId,
+                                      @PathVariable("addressId") String addressId) {
         addressService.remove(user, contactId, addressId);
 
         return WebResponse.<String>builder()
