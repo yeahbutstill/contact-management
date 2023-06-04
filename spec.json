@@ -41,65 +41,90 @@
   "paths": {
     "/users": {
       "post": {
-        "summary": "",
+        "summary": "Register User",
+        "description": "Create new user",
         "operationId": "",
-        "parameters": [
-        ],
         "responses": {
         }
       }
     },
     "/users/current": {
       "get": {
-        "summary": "",
+        "summary": "Get Current User",
+        "description": "Get current user login",
         "operationId": "",
-        "parameters": [
-        ],
         "responses": {
         }
       },
       "patch": {
-        "summary": "",
+        "summary": "Update Current User",
+        "description": "Update current user but only the name",
         "operationId": "",
-        "parameters": [
-        ],
         "responses": {
         }
       }
     },
     "/auth/login": {
       "post": {
-        "summary": "",
+        "summary": "Login User",
+        "description": "Login user",
         "operationId": "",
-        "parameters": [
-        ],
         "responses": {
         }
       }
     },
     "/auth/logout": {
       "delete": {
-        "summary": "",
+        "summary": "Logout User",
+        "description": "Logout user",
         "operationId": "",
-        "parameters": [
-        ],
         "responses": {
         }
       }
     },
     "/contacts": {
       "post": {
-        "summary": "",
+        "summary": "Create new contact",
+        "description": "Create new contact",
         "operationId": "",
-        "parameters": [
-        ],
         "responses": {
         }
       },
       "get": {
-        "summary": "",
+        "summary": "Search contacts",
+        "description": "Search contacts",
         "operationId": "",
         "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "description": "Contact name"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "required": false,
+            "description": "Contact email"
+          },
+          {
+            "name": "phone",
+            "in": "query",
+            "required": false,
+            "description": "Contact phone"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Contact page"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "description": "Contact size"
+          }
         ],
         "responses": {
         }
@@ -107,25 +132,46 @@
     },
     "/contacts/{contactId}": {
       "put": {
-        "summary": "",
+        "summary": "Update contact",
+        "description": "Update contact",
         "operationId": "",
         "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID"
+          }
         ],
         "responses": {
         }
       },
       "delete": {
-        "summary": "",
+        "summary": "Delete contact",
+        "description": "Delete contact",
         "operationId": "",
         "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID"
+          }
         ],
         "responses": {
         }
       },
       "get": {
-        "summary": "",
+        "summary": "Get contact",
+        "description": "Get contact",
         "operationId": "",
         "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID"
+          }
         ],
         "responses": {
         }
@@ -133,17 +179,31 @@
     },
     "/contacts/{contactId}/addresses": {
       "post": {
-        "summary": "",
+        "summary": "Create new contact address",
+        "description": "Create new address",
         "operationId": "",
         "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID"
+          }
         ],
         "responses": {
         }
       },
       "get": {
-        "summary": "",
+        "summary": "Get all contact addresses",
+        "description": "Get all addresses",
         "operationId": "",
         "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID"
+          }
         ],
         "responses": {
         }
@@ -151,25 +211,64 @@
     },
     "/contacts/{contactId}/addresses/{addressId}": {
       "get": {
-        "summary": "",
+        "summary": "Get contact address",
+        "description": "Get address",
         "operationId": "",
         "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID"
+          },
+          {
+            "name": "addressId",
+            "in": "path",
+            "required": true,
+            "description": "Address ID"
+          }
         ],
         "responses": {
         }
       },
       "delete": {
-        "summary": "",
+        "summary": "Delete contact address",
+        "description": "Delete address",
         "operationId": "",
         "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID"
+          },
+          {
+            "name": "addressId",
+            "in": "path",
+            "required": true,
+            "description": "Address ID"
+          }
         ],
         "responses": {
         }
       },
       "put": {
-        "summary": "",
+        "summary": "Update contact address",
+        "description": "Update address",
         "operationId": "",
         "parameters": [
+          {
+            "name": "contactId",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID"
+          },
+          {
+            "name": "addressId",
+            "in": "path",
+            "required": true,
+            "description": "Address ID"
+          }
         ],
         "responses": {
         }
