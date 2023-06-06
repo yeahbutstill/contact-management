@@ -95,8 +95,8 @@ class AddressControllerTest {
             WebResponse<String> response = objectMapper
                     .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
                     });
-            assertNotNull(response.getErrors());
-            assertNull(response.getData());
+            assertNotNull(response.errors());
+            assertNull(response.data());
         });
     }
 
@@ -124,16 +124,16 @@ class AddressControllerTest {
             WebResponse<AddressResponse> response = objectMapper
                     .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
                     });
-            assertNull(response.getErrors());
-            assertNotNull(response.getData());
-            assertNotNull(request.getContactId(), response.getData().getId());
-            assertEquals(request.getStreet(), response.getData().getStreet());
-            assertEquals(request.getCity(), response.getData().getCity());
-            assertEquals(request.getProvince(), response.getData().getProvince());
-            assertEquals(request.getPostalCode(), response.getData().getPostalCode());
-            assertEquals(request.getCountry(), response.getData().getCountry());
+            assertNull(response.errors());
+            assertNotNull(response.data());
+            assertNotNull(request.getContactId(), response.data().id());
+            assertEquals(request.getStreet(), response.data().street());
+            assertEquals(request.getCity(), response.data().city());
+            assertEquals(request.getProvince(), response.data().province());
+            assertEquals(request.getPostalCode(), response.data().postalCode());
+            assertEquals(request.getCountry(), response.data().country());
 
-            assertTrue(addressRepository.existsById(response.getData().getId()));
+            assertTrue(addressRepository.existsById(response.data().id()));
         });
     }
 
@@ -151,8 +151,8 @@ class AddressControllerTest {
             WebResponse<String> response = objectMapper
                     .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
                     });
-            assertNotNull(response.getErrors());
-            assertNull(response.getData());
+            assertNotNull(response.errors());
+            assertNull(response.data());
         });
     }
 
@@ -183,15 +183,15 @@ class AddressControllerTest {
             WebResponse<AddressResponse> response = objectMapper
                     .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
                     });
-            assertNull(response.getErrors());
-            assertNotNull(response.getData());
-            assertNotNull(response.getData().getId());
-            assertEquals(address.getId(), response.getData().getId());
-            assertEquals(address.getStreet(), response.getData().getStreet());
-            assertEquals(address.getCity(), response.getData().getCity());
-            assertEquals(address.getProvince(), response.getData().getProvince());
-            assertEquals(address.getPostalCode(), response.getData().getPostalCode());
-            assertEquals(address.getCountry(), response.getData().getCountry());
+            assertNull(response.errors());
+            assertNotNull(response.data());
+            assertNotNull(response.data().id());
+            assertEquals(address.getId(), response.data().id());
+            assertEquals(address.getStreet(), response.data().street());
+            assertEquals(address.getCity(), response.data().city());
+            assertEquals(address.getProvince(), response.data().province());
+            assertEquals(address.getPostalCode(), response.data().postalCode());
+            assertEquals(address.getCountry(), response.data().country());
         });
     }
 
@@ -216,8 +216,8 @@ class AddressControllerTest {
             WebResponse<String> response = objectMapper
                     .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
                     });
-            assertNotNull(response.getErrors());
-            assertNull(response.getData());
+            assertNotNull(response.errors());
+            assertNull(response.data());
         });
     }
 
@@ -257,15 +257,15 @@ class AddressControllerTest {
             WebResponse<AddressResponse> response = objectMapper
                     .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
                     });
-            assertNull(response.getErrors());
-            assertNotNull(response.getData());
-            assertEquals(request.getStreet(), response.getData().getStreet());
-            assertEquals(request.getCity(), response.getData().getCity());
-            assertEquals(request.getProvince(), response.getData().getProvince());
-            assertEquals(request.getPostalCode(), response.getData().getPostalCode());
-            assertEquals(request.getCountry(), response.getData().getCountry());
+            assertNull(response.errors());
+            assertNotNull(response.data());
+            assertEquals(request.getStreet(), response.data().street());
+            assertEquals(request.getCity(), response.data().city());
+            assertEquals(request.getProvince(), response.data().province());
+            assertEquals(request.getPostalCode(), response.data().postalCode());
+            assertEquals(request.getCountry(), response.data().country());
 
-            assertTrue(addressRepository.existsById(response.getData().getId()));
+            assertTrue(addressRepository.existsById(response.data().id()));
         });
     }
 
@@ -283,8 +283,8 @@ class AddressControllerTest {
             WebResponse<String> response = objectMapper
                     .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
                     });
-            assertNotNull(response.getErrors());
-            assertNull(response.getData());
+            assertNotNull(response.errors());
+            assertNull(response.data());
         });
     }
 
@@ -315,8 +315,8 @@ class AddressControllerTest {
             WebResponse<String> response = objectMapper
                     .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
                     });
-            assertNull(response.getErrors());
-            assertEquals("OK", response.getData());
+            assertNull(response.errors());
+            assertEquals("OK", response.data());
 
             assertFalse(addressRepository.existsById(address.getId()));
         });
@@ -336,8 +336,8 @@ class AddressControllerTest {
             WebResponse<String> response = objectMapper
                     .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
                     });
-            assertNotNull(response.getErrors());
-            assertNull(response.getData());
+            assertNotNull(response.errors());
+            assertNull(response.data());
         });
     }
 
@@ -370,9 +370,9 @@ class AddressControllerTest {
             WebResponse<List<AddressResponse>> response = objectMapper
                     .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
                     });
-            assertNull(response.getErrors());
-            assertNotNull(response.getData());
-            assertEquals(10_000, response.getData().size());
+            assertNull(response.errors());
+            assertNotNull(response.data());
+            assertEquals(10_000, response.data().size());
         });
     }
 

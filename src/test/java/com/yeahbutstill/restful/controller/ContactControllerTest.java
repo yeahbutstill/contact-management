@@ -26,43 +26,22 @@ import java.util.Random;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.MockMvcBuilder.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class ContactControllerTest {
 
+    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private ContactRepository contactRepository;
-
     @Autowired
     private ObjectMapper objectMapper;
-
-    @BeforeEach
-    void setup() {
-        addressRepository.deleteAll();
-        contactRepository.deleteAll();
-        userRepository.deleteAll();
-
-        User user = new User();
-        user.setUsername("yeahbutstill");
-        user.setPassword(BCrypt.hashpw("rahasiabanget", BCrypt.gensalt()));
-        user.setName("Dani Setiawan");
-        user.setToken("yeahbutstil-30day");
-        user.setTokenExpiredAt(System.currentTimeMillis() + 1_000_000L);
-        userRepository.save(user);
-    }
-
-    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     @Autowired
     private AddressRepository addressRepository;
 
@@ -77,6 +56,21 @@ class ContactControllerTest {
         }
 
         return sb.toString();
+    }
+
+    @BeforeEach
+    void setup() {
+        addressRepository.deleteAll();
+        contactRepository.deleteAll();
+        userRepository.deleteAll();
+
+        User user = new User();
+        user.setUsername("yeahbutstill");
+        user.setPassword(BCrypt.hashpw("rahasiabanget", BCrypt.gensalt()));
+        user.setName("Dani Setiawan");
+        user.setToken("yeahbutstil-30day");
+        user.setTokenExpiredAt(System.currentTimeMillis() + 1_000_000L);
+        userRepository.save(user);
     }
 
     @SneakyThrows
@@ -99,8 +93,9 @@ class ContactControllerTest {
                 content().contentType(MediaType.APPLICATION_JSON_VALUE),
                 jsonPath("$.errors").exists()
         ).andDo(result -> {
-            WebResponse<String> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNotNull(response.getErrors());
+            WebResponse<String> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+            assertNotNull(response.errors());
         });
     }
 
@@ -123,16 +118,17 @@ class ContactControllerTest {
                 status().isCreated(),
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
-            WebResponse<ContactResponse> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNull(response.getErrors());
-            assertNotNull(response.getData());
-            assertNotNull(response.getData().getId());
-            assertEquals("Dani", response.getData().getFirstName());
-            assertEquals("Setiawan", response.getData().getLastName());
-            assertEquals("dani@yeahbutstill.com", response.getData().getEmail());
-            assertEquals("+6281234567890", response.getData().getPhone());
+            WebResponse<ContactResponse> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+            assertNull(response.errors());
+            assertNotNull(response.data());
+            assertNotNull(response.data().id());
+            assertEquals("Dani", response.data().firstName());
+            assertEquals("Setiawan", response.data().lastName());
+            assertEquals("dani@yeahbutstill.com", response.data().email());
+            assertEquals("+6281234567890", response.data().phone());
 
-            assertTrue(contactRepository.existsById(response.getData().getId()));
+            assertTrue(contactRepository.existsById(response.data().id()));
         });
     }
 
@@ -149,9 +145,10 @@ class ContactControllerTest {
                 content().contentType(MediaType.APPLICATION_JSON_VALUE),
                 content().json("{\"errors\":[\"Contact not found\"]}")
         ).andDo(result -> {
-            WebResponse<String> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNotNull(response.getErrors());
-            assertEquals("Contact not found", response.getErrors().get(0));
+            WebResponse<String> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+            assertNotNull(response.errors());
+            assertEquals("Contact not found", response.errors().get(0));
         });
     }
 
@@ -178,14 +175,15 @@ class ContactControllerTest {
                 status().isOk(),
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
-            WebResponse<ContactResponse> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNull(response.getErrors());
-            assertNotNull(response.getData());
-            assertEquals(contact.getId(), response.getData().getId());
-            assertEquals(contact.getFirstName(), response.getData().getFirstName());
-            assertEquals(contact.getLastName(), response.getData().getLastName());
-            assertEquals(contact.getEmail(), response.getData().getEmail());
-            assertEquals(contact.getPhone(), response.getData().getPhone());
+            WebResponse<ContactResponse> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+            assertNull(response.errors());
+            assertNotNull(response.data());
+            assertEquals(contact.getId(), response.data().id());
+            assertEquals(contact.getFirstName(), response.data().firstName());
+            assertEquals(contact.getLastName(), response.data().lastName());
+            assertEquals(contact.getEmail(), response.data().email());
+            assertEquals(contact.getPhone(), response.data().phone());
         });
     }
 
@@ -208,8 +206,9 @@ class ContactControllerTest {
                 status().isBadRequest(),
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
-            WebResponse<String> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNotNull(response.getErrors());
+            WebResponse<String> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+            assertNotNull(response.errors());
         });
 
     }
@@ -244,15 +243,16 @@ class ContactControllerTest {
                 status().isOk(),
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
-            WebResponse<ContactResponse> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNull(response.getErrors());
-            assertNotNull(response.getData());
-            assertEquals(request.getFirstName(), response.getData().getFirstName());
-            assertEquals(request.getLastName(), response.getData().getLastName());
-            assertEquals(request.getEmail(), response.getData().getEmail());
-            assertEquals(request.getPhone(), response.getData().getPhone());
+            WebResponse<ContactResponse> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+            assertNull(response.errors());
+            assertNotNull(response.data());
+            assertEquals(request.getFirstName(), response.data().firstName());
+            assertEquals(request.getLastName(), response.data().lastName());
+            assertEquals(request.getEmail(), response.data().email());
+            assertEquals(request.getPhone(), response.data().phone());
 
-            assertTrue(contactRepository.existsById(response.getData().getId()));
+            assertTrue(contactRepository.existsById(response.data().id()));
         });
     }
 
@@ -268,8 +268,9 @@ class ContactControllerTest {
                 status().isNotFound(),
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
-            WebResponse<String> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNotNull(response.getErrors());
+            WebResponse<String> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+            assertNotNull(response.errors());
         });
     }
 
@@ -296,9 +297,10 @@ class ContactControllerTest {
                 status().isOk(),
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
-            WebResponse<String> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNull(response.getErrors());
-            assertEquals("OK", response.getData());
+            WebResponse<String> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+            assertNull(response.errors());
+            assertEquals("OK", response.data());
             assertFalse(contactRepository.existsById(contact.getId()));
         });
 
@@ -316,12 +318,13 @@ class ContactControllerTest {
                 status().isOk(),
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
-            WebResponse<List<ContactResponse>> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNull(response.getErrors());
-            assertEquals(0, response.getData().size());
-            assertEquals(0, response.getPaging().getTotalPage());
-            assertEquals(0, response.getPaging().getCurrentPage());
-            assertEquals(10, response.getPaging().getSize());
+            WebResponse<List<ContactResponse>> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+            assertNull(response.errors());
+            assertEquals(0, response.data().size());
+            assertEquals(0, response.paging().totalPage());
+            assertEquals(0, response.paging().currentPage());
+            assertEquals(10, response.paging().size());
         });
     }
 
@@ -333,7 +336,7 @@ class ContactControllerTest {
 
         User user = userRepository.findById("yeahbutstill").orElseThrow(() -> new RuntimeException("User not found"));
 
-        for (int i=0; i<100; i++) {
+        for (int i = 0; i < 100; i++) {
             Contact contact = new Contact();
             contact.setId(UUID.randomUUID().toString());
             contact.setUser(user);
@@ -354,12 +357,13 @@ class ContactControllerTest {
                 status().isOk(),
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
-            WebResponse<List<ContactResponse>> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNull(response.getErrors());
-            assertEquals(10, response.getData().size());
-            assertEquals(10, response.getPaging().getTotalPage());
-            assertEquals(0, response.getPaging().getCurrentPage());
-            assertEquals(10, response.getPaging().getSize());
+            WebResponse<List<ContactResponse>> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+            assertNull(response.errors());
+            assertEquals(10, response.data().size());
+            assertEquals(10, response.paging().totalPage());
+            assertEquals(0, response.paging().currentPage());
+            assertEquals(10, response.paging().size());
         });
 
         mockMvc.perform(
@@ -372,12 +376,13 @@ class ContactControllerTest {
                 status().isOk(),
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
-            WebResponse<List<ContactResponse>> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNull(response.getErrors());
-            assertEquals(10, response.getData().size());
-            assertEquals(10, response.getPaging().getTotalPage());
-            assertEquals(0, response.getPaging().getCurrentPage());
-            assertEquals(10, response.getPaging().getSize());
+            WebResponse<List<ContactResponse>> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+            assertNull(response.errors());
+            assertEquals(10, response.data().size());
+            assertEquals(10, response.paging().totalPage());
+            assertEquals(0, response.paging().currentPage());
+            assertEquals(10, response.paging().size());
         });
 
         mockMvc.perform(
@@ -390,12 +395,13 @@ class ContactControllerTest {
                 status().isOk(),
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
-            WebResponse<List<ContactResponse>> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNull(response.getErrors());
-            assertEquals(10, response.getData().size());
-            assertEquals(10, response.getPaging().getTotalPage());
-            assertEquals(0, response.getPaging().getCurrentPage());
-            assertEquals(10, response.getPaging().getSize());
+            WebResponse<List<ContactResponse>> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+            assertNull(response.errors());
+            assertEquals(10, response.data().size());
+            assertEquals(10, response.paging().totalPage());
+            assertEquals(0, response.paging().currentPage());
+            assertEquals(10, response.paging().size());
         });
 
         mockMvc.perform(
@@ -408,12 +414,13 @@ class ContactControllerTest {
                 status().isOk(),
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
-            WebResponse<List<ContactResponse>> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNull(response.getErrors());
-            assertEquals(10, response.getData().size());
-            assertEquals(10, response.getPaging().getTotalPage());
-            assertEquals(0, response.getPaging().getCurrentPage());
-            assertEquals(10, response.getPaging().getSize());
+            WebResponse<List<ContactResponse>> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+            assertNull(response.errors());
+            assertEquals(10, response.data().size());
+            assertEquals(10, response.paging().totalPage());
+            assertEquals(0, response.paging().currentPage());
+            assertEquals(10, response.paging().size());
         });
 
         mockMvc.perform(
@@ -427,12 +434,13 @@ class ContactControllerTest {
                 status().isOk(),
                 content().contentType(MediaType.APPLICATION_JSON_VALUE)
         ).andDo(result -> {
-            WebResponse<List<ContactResponse>> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNull(response.getErrors());
-            assertEquals(0, response.getData().size());
-            assertEquals(10, response.getPaging().getTotalPage());
-            assertEquals(1000, response.getPaging().getCurrentPage());
-            assertEquals(10, response.getPaging().getSize());
+            WebResponse<List<ContactResponse>> response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+            assertNull(response.errors());
+            assertEquals(0, response.data().size());
+            assertEquals(10, response.paging().totalPage());
+            assertEquals(1000, response.paging().currentPage());
+            assertEquals(10, response.paging().size());
         });
 
     }

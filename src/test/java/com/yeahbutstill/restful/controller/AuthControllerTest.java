@@ -20,10 +20,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.MockMvcBuilder.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -66,8 +65,9 @@ class AuthControllerTest {
                 status().isUnauthorized()
         ).andDo(result -> {
             WebResponse<String> response = objectMapper
-                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNotNull(response.getErrors());
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+                    });
+            assertNotNull(response.errors());
         });
     }
 
@@ -93,8 +93,9 @@ class AuthControllerTest {
                 status().isUnauthorized()
         ).andDo(result -> {
             WebResponse<String> response = objectMapper
-                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNotNull(response.getErrors());
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+                    });
+            assertNotNull(response.errors());
         });
     }
 
@@ -120,15 +121,16 @@ class AuthControllerTest {
                 status().isOk()
         ).andDo(result -> {
             WebResponse<TokenResponse> response = objectMapper
-                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNotNull(response.getData().getToken());
-            assertNotNull(response.getData().getExpiredAt());
-            assertNull(response.getErrors());
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+                    });
+            assertNotNull(response.data().token());
+            assertNotNull(response.data().expiredAt());
+            assertNull(response.errors());
 
             User userDb = userRepository.findById("test").orElse(null);
             assertNotNull(userDb);
-            assertEquals(userDb.getToken(), response.getData().getToken());
-            assertEquals(userDb.getTokenExpiredAt(), response.getData().getExpiredAt());
+            assertEquals(userDb.getToken(), response.data().token());
+            assertEquals(userDb.getTokenExpiredAt(), response.data().expiredAt());
         });
     }
 
@@ -142,8 +144,9 @@ class AuthControllerTest {
                 status().isUnauthorized()
         ).andDo(result -> {
             WebResponse<String> response = objectMapper
-                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNotNull(response.getErrors());
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+                    });
+            assertNotNull(response.errors());
         });
     }
 
@@ -166,9 +169,10 @@ class AuthControllerTest {
                 status().isOk()
         ).andDo(result -> {
             WebResponse<String> response = objectMapper
-                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {});
-            assertNotNull(response.getData());
-            assertNull(response.getErrors());
+                    .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
+                    });
+            assertNotNull(response.data());
+            assertNull(response.errors());
 
             User userDb = userRepository.findById("yeahbutstill").orElse(null);
             assertNotNull(userDb);

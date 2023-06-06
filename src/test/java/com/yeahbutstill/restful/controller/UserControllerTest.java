@@ -87,7 +87,7 @@ class UserControllerTest {
             WebResponse<String> response = objectMapper
                     .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
                     });
-            assertEquals("OK", response.getData());
+            assertEquals("OK", response.data());
         });
     }
 
@@ -110,7 +110,7 @@ class UserControllerTest {
             WebResponse<String> response = objectMapper
                     .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
                     });
-            assertNotNull(response.getErrors());
+            assertNotNull(response.errors());
         });
     }
 
@@ -139,7 +139,7 @@ class UserControllerTest {
             WebResponse<String> response = objectMapper
                     .readValue(result.getResponse().getContentAsString(), new TypeReference<>() {
                     });
-            assertNotNull(response.getErrors());
+            assertNotNull(response.errors());
         });
     }
 
@@ -157,7 +157,7 @@ class UserControllerTest {
                     .getContentAsString(), new TypeReference<>() {
             });
 
-            assertNotNull(response.getErrors());
+            assertNotNull(response.errors());
         });
     }
 
@@ -198,10 +198,10 @@ class UserControllerTest {
                     .getContentAsString(), new TypeReference<>() {
             });
 
-            assertNull(response.getErrors());
-            assertNotNull(response.getData());
-            assertEquals(user.getUsername(), response.getData().getUsername());
-            assertEquals(user.getName(), response.getData().getName());
+            assertNull(response.errors());
+            assertNotNull(response.data());
+            assertEquals(user.getUsername(), response.data().username());
+            assertEquals(user.getName(), response.data().name());
         });
     }
 
@@ -227,9 +227,9 @@ class UserControllerTest {
                     .getContentAsString(), new TypeReference<>() {
             });
 
-            assertNotNull(response.getErrors());
-            assertEquals("X-API-TOKEN is expired", response.getErrors().get(0));
-            assertTrue(response.getErrors().get(0).contains("X-API-TOKEN is expired"));
+            assertNotNull(response.errors());
+            assertEquals("X-API-TOKEN is expired", response.errors().get(0));
+            assertTrue(response.errors().get(0).contains("X-API-TOKEN is expired"));
         });
     }
 
@@ -250,7 +250,7 @@ class UserControllerTest {
                     .getContentAsString(), new TypeReference<>() {
             });
 
-            assertNotNull(response.getErrors());
+            assertNotNull(response.errors());
         });
     }
 
@@ -282,10 +282,10 @@ class UserControllerTest {
                     .getContentAsString(), new TypeReference<>() {
             });
 
-            assertNull(response.getErrors());
-            assertNotNull(response.getData());
-            assertEquals(user.getUsername(), response.getData().getUsername());
-            assertEquals(request.getName(), response.getData().getName());
+            assertNull(response.errors());
+            assertNotNull(response.data());
+            assertEquals(user.getUsername(), response.data().username());
+            assertEquals(request.getName(), response.data().name());
 
             User userDB = userRepository.findById(user.getUsername()).orElse(null);
             assertNotNull(userDB);
