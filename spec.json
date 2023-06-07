@@ -140,6 +140,11 @@
     },
     "/users/current": {
       "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "tags": [
           "User"
         ],
@@ -196,6 +201,11 @@
         }
       },
       "patch": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "tags": [
           "User"
         ],
@@ -396,6 +406,11 @@
     },
     "/auth/logout": {
       "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "tags": [
           "Auth"
         ],
@@ -425,6 +440,11 @@
     },
     "/contacts": {
       "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "tags": [
           "Contact"
         ],
@@ -569,6 +589,11 @@
         }
       },
       "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "tags": [
           "Contact"
         ],
@@ -763,6 +788,11 @@
     },
     "/contacts/{contactId}": {
       "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "tags": [
           "Contact"
         ],
@@ -927,6 +957,11 @@
         }
       },
       "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "tags": [
           "Contact"
         ],
@@ -992,6 +1027,11 @@
         }
       },
       "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "tags": [
           "Contact"
         ],
@@ -1090,6 +1130,11 @@
     },
     "/contacts/{contactId}/addresses": {
       "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "tags": [
           "Contact Address"
         ],
@@ -1252,6 +1297,11 @@
         }
       },
       "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "tags": [
           "Contact Address"
         ],
@@ -1357,6 +1407,11 @@
     },
     "/contacts/{contactId}/addresses/{addressId}": {
       "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "tags": [
           "Contact Address"
         ],
@@ -1474,6 +1529,11 @@
         }
       },
       "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "tags": [
           "Contact Address"
         ],
@@ -1556,6 +1616,11 @@
         }
       },
       "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "tags": [
           "Contact Address"
         ],
@@ -1735,5 +1800,13 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "ContactManagementAuth": {
+        "description": "Authentication for Contact Management RESTful API",
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-KEY"
+      }
+    }
   }
 }
