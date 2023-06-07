@@ -41,9 +41,11 @@
   "paths": {
     "/users": {
       "post": {
+        "tags": [
+          "User"
+        ],
         "summary": "Register User",
         "description": "Create new user",
-        "operationId": "",
         "requestBody": {
           "required": true,
           "content": {
@@ -138,9 +140,11 @@
     },
     "/users/current": {
       "get": {
+        "tags": [
+          "User"
+        ],
         "summary": "Get Current User",
         "description": "Get current user login",
-        "operationId": "",
         "responses": {
           "200": {
             "description": "Success",
@@ -192,9 +196,11 @@
         }
       },
       "patch": {
+        "tags": [
+          "User"
+        ],
         "summary": "Update Current User",
         "description": "Update current user but only the name",
-        "operationId": "",
         "requestBody": {
           "required": true,
           "content": {
@@ -239,7 +245,7 @@
         },
         "responses": {
           "200": {
-            "description": "",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
@@ -290,9 +296,11 @@
     },
     "/auth/login": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "summary": "Login User",
         "description": "Login user",
-        "operationId": "",
         "requestBody": {
           "required": true,
           "content": {
@@ -337,7 +345,7 @@
         },
         "responses": {
           "200": {
-            "description": "",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
@@ -388,12 +396,14 @@
     },
     "/auth/logout": {
       "delete": {
+        "tags": [
+          "Auth"
+        ],
         "summary": "Logout User",
         "description": "Logout user",
-        "operationId": "",
         "responses": {
           "200": {
-            "description": "",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
@@ -415,9 +425,11 @@
     },
     "/contacts": {
       "post": {
+        "tags": [
+          "Contact"
+        ],
         "summary": "Create new contact",
         "description": "Create new contact",
-        "operationId": "",
         "requestBody": {
           "required": true,
           "content": {
@@ -482,7 +494,7 @@
         },
         "responses": {
           "201": {
-            "description": "",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
@@ -557,9 +569,11 @@
         }
       },
       "get": {
+        "tags": [
+          "Contact"
+        ],
         "summary": "Search contacts",
         "description": "Search contacts",
-        "operationId": "",
         "parameters": [
           {
             "name": "name",
@@ -749,9 +763,11 @@
     },
     "/contacts/{contactId}": {
       "put": {
+        "tags": [
+          "Contact"
+        ],
         "summary": "Update contact",
         "description": "Update contact",
-        "operationId": "",
         "requestBody": {
           "required": true,
           "content": {
@@ -911,6 +927,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Contact"
+        ],
         "summary": "Delete contact",
         "description": "Delete contact",
         "operationId": "",
@@ -973,6 +992,9 @@
         }
       },
       "get": {
+        "tags": [
+          "Contact"
+        ],
         "summary": "Get contact",
         "description": "Get contact",
         "operationId": "",
@@ -1068,6 +1090,9 @@
     },
     "/contacts/{contactId}/addresses": {
       "post": {
+        "tags": [
+          "Contact Address"
+        ],
         "summary": "Create new contact address",
         "description": "Create new address",
         "operationId": "",
@@ -1227,6 +1252,9 @@
         }
       },
       "get": {
+        "tags": [
+          "Contact Address"
+        ],
         "summary": "Get all contact addresses",
         "description": "Get all addresses",
         "operationId": "",
@@ -1329,6 +1357,9 @@
     },
     "/contacts/{contactId}/addresses/{addressId}": {
       "get": {
+        "tags": [
+          "Contact Address"
+        ],
         "summary": "Get contact address",
         "description": "Get address",
         "operationId": "",
@@ -1443,6 +1474,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Contact Address"
+        ],
         "summary": "Delete contact address",
         "description": "Delete address",
         "operationId": "",
@@ -1522,6 +1556,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Contact Address"
+        ],
         "summary": "Update contact address",
         "description": "Update address",
         "operationId": "",
@@ -1696,5 +1733,7 @@
         }
       }
     }
+  },
+  "components": {
   }
 }
