@@ -1,11 +1,13 @@
 # Contact Management
 
-## Run Container PostgreSQL 
+## Run Container PostgreSQL
+
 ```shell
 docker run --rm --name restful-api-contact-management -e POSTGRES_DB=contact_management_db -e POSTGRES_USER=dani -e POSTGRES_PASSWORD=dani -e PGDATA=/var/lib/postgresql/data/pgdata -v "$PWD/restful-api-contact-management-data:/var/lib/postgresql/data" -p 5432:5432 postgres:15
 ```
 
 ## Run Qodana
+
 ```shell
 docker run --rm -it -p 8080:8080 -v $PWD:/data/project/ jetbrains/qodana-jvm --show-report
 ```
@@ -20,9 +22,9 @@ Request Body :
 
 ```json
 {
-  "username" : "yeahbutstill",
-  "password" : "rahasia",
-  "name" : "Dani" 
+  "username": "yeahbutstill",
+  "password": "rahasia",
+  "name": "Dani"
 }
 ```
 
@@ -30,7 +32,7 @@ Response Body (Success) :
 
 ```json
 {
-  "data" : "OK"
+  "data": "OK"
 }
 ```
 
@@ -38,7 +40,7 @@ Response Body (Failed) :
 
 ```json
 {
-  "errors" : "Username must not blank, ???"
+  "errors": "Username must not blank, ???"
 }
 ```
 
@@ -50,8 +52,8 @@ Request Body :
 
 ```json
 {
-  "username" : "yeahbutstill",
-  "password" : "rahasia" 
+  "username": "yeahbutstill",
+  "password": "rahasia"
 }
 ```
 
@@ -59,81 +61,11 @@ Response Body (Success) :
 
 ```json
 {
-  "data" : {
-    "token" : "TOKEN",
-    "expiredAt" : 2342342423423 // milliseconds
+  "data": {
+    "token": "TOKEN",
+    "expiredAt": 2342342423423
+    // milliseconds
   }
-}
-```
-
-Response Body (Failed, 401) :
-
-```json
-{
-  "errors" : "Username or password wrong"
-}
-```
-
-## Get User
-
-Endpoint : GET /api/users/current
-
-Request Header :
-
-- X-API-TOKEN : Token (Mandatory)
-
-Response Body (Success) :
-
-```json
-{
-  "data" : {
-    "username" : "yeahbutstill",
-    "name" : "Dani"
-  }
-}
-```
-
-Response Body (Failed, 401) :
-
-```json
-{
-  "errors" : "Unauthorized"
-}
-```
-
-## Update User
-
-Endpoint : PATCH /api/users/current
-
-Request Header :
-
-- X-API-TOKEN : Token (Mandatory)
-
-Request Body :
-
-```json
-{
-  "name" : "Dani", // put if only want to update name
-  "password" : "newpassword" // put if only want to update password
-}
-```
-
-Response Body (Success) :
-
-```json
-{
-  "data" : {
-    "username" : "yeahbutstill",
-    "name" : "Dani"
-  }
-}
-```
-
-Response Body (Failed, 401) :
-
-```json
-{
-  "errors" : "Unauthorized"
 }
 ```
 
@@ -149,9 +81,91 @@ Response Body (Success) :
 
 ```json
 {
-  "data" : "OK"
+  "data": "OK"
 }
 ```
+
+## Get User
+
+Endpoint : GET /api/users/current
+
+Request Header :
+
+- X-API-TOKEN : Token (Mandatory)
+
+Response Body (Success) :
+
+```json
+{
+  "data": {
+    "username": "yeahbutstill",
+    "name": "Dani"
+  }
+}
+```
+
+Response Body (Failed, 401) :
+
+```json
+{
+  "errors": "Unauthorized"
+}
+```
+
+## Update User
+
+Endpoint : PATCH /api/users/current
+
+Request Header :
+
+- X-API-TOKEN : Token (Mandatory)
+
+Request Body :
+
+```json
+{
+  "name": "Dani",
+  // put if only want to update name
+  "password": "newpassword"
+  // put if only want to update password
+}
+```
+
+Response Body (Success) :
+
+```json
+{
+  "data": {
+    "username": "yeahbutstill",
+    "name": "Dani"
+  }
+}
+```
+
+Response Body (Failed, 401) :
+
+```json
+{
+  "errors": "Unauthorized"
+}
+```
+
+## Logout User
+
+Endpoint : DELETE /api/auth/logout
+
+Request Header :
+
+- X-API-TOKEN : Token (Mandatory)
+
+Response Body (Success) :
+
+```json
+{
+  "data": "OK"
+}
+```
+
 # Contact API Spec
 
 ## Create Contact
@@ -166,10 +180,10 @@ Request Body :
 
 ```json
 {
-  "firstName" : "Dani",
-  "lastName" : "yeahbutstill",
-  "email" : "dani@example.com",
-  "phone" : "0899889998"
+  "firstName": "Dani",
+  "lastName": "yeahbutstill",
+  "email": "dani@example.com",
+  "phone": "0899889998"
 }
 ```
 
@@ -178,7 +192,7 @@ Response Body (Success) :
 ```json
 {
   "data": {
-    "id" : "random-string",
+    "id": "random-string",
     "firstName": "Dani",
     "lastName": "Setiawan",
     "email": "dani@example.com",
@@ -191,7 +205,7 @@ Response Body (Failed) :
 
 ```json
 {
-  "errors" : "Email format invalid, phone formar invalid, ..."
+  "errors": "Email format invalid, phone formar invalid, ..."
 }
 ```
 
@@ -207,10 +221,10 @@ Request Body :
 
 ```json
 {
-  "firstName" : "Dani",
-  "lastName" : "Setiawan",
-  "email" : "dani@example.com",
-  "phone" : "0899889998"
+  "firstName": "Dani",
+  "lastName": "Setiawan",
+  "email": "dani@example.com",
+  "phone": "0899889998"
 }
 ```
 
@@ -219,7 +233,7 @@ Response Body (Success) :
 ```json
 {
   "data": {
-    "id" : "random-string",
+    "id": "random-string",
     "firstName": "Dani",
     "lastName": "Setiawan",
     "email": "dani@example.com",
@@ -232,7 +246,7 @@ Response Body (Failed) :
 
 ```json
 {
-  "errors" : "Email format invalid, phone formar invalid, ..."
+  "errors": "Email format invalid, phone formar invalid, ..."
 }
 ```
 
@@ -249,7 +263,7 @@ Response Body (Success) :
 ```json
 {
   "data": {
-    "id" : "random-string",
+    "id": "random-string",
     "firstName": "Dani",
     "lastName": "Setiawan",
     "email": "dani@example.com",
@@ -262,7 +276,7 @@ Response Body (Failed, 404) :
 
 ```json
 {
-  "errors" : "Contact is not found"
+  "errors": "Contact is not found"
 }
 ```
 
@@ -295,10 +309,10 @@ Response Body (Success) :
       "phone": "0899889998"
     }
   ],
-  "paging" : {
-    "currentPage" : 0,
-    "totalPage" : 10,
-    "size" : 10
+  "paging": {
+    "currentPage": 0,
+    "totalPage": 10,
+    "size": 10
   }
 }
 ```
@@ -307,7 +321,7 @@ Response Body (Failed) :
 
 ```json
 {
-  "errors" : "Unauthorized"
+  "errors": "Unauthorized"
 }
 ```
 
@@ -323,7 +337,7 @@ Response Body (Success) :
 
 ```json
 {
-  "data" : "OK"
+  "data": "OK"
 }
 ```
 
@@ -331,7 +345,7 @@ Response Body (Failed) :
 
 ```json
 {
-  "errors" : "Contact is not found"
+  "errors": "Contact is not found"
 }
 ```
 
@@ -349,11 +363,11 @@ Request Body :
 
 ```json
 {
-  "street" : "Jalan apa",
-  "city" : "Kota",
-  "province" : "provinsi",
-  "country" : "Negara",
-  "postalCode" : "12313"
+  "street": "Jalan apa",
+  "city": "Kota",
+  "province": "provinsi",
+  "country": "Negara",
+  "postalCode": "12313"
 }
 ```
 
@@ -361,13 +375,13 @@ Response Body (Success) :
 
 ```json
 {
-  "data" : {
-    "id" : "randomstring",
-    "street" : "Jalan apa",
-    "city" : "Kota",
-    "province" : "provinsi",
-    "country" : "Negara",
-    "postalCode" : "12313"
+  "data": {
+    "id": "randomstring",
+    "street": "Jalan apa",
+    "city": "Kota",
+    "province": "provinsi",
+    "country": "Negara",
+    "postalCode": "12313"
   }
 }
 ```
@@ -376,7 +390,7 @@ Response Body (Failed) :
 
 ```json
 {
-  "errors" : "Contact is not found"
+  "errors": "Contact is not found"
 }
 ```
 
@@ -392,11 +406,11 @@ Request Body :
 
 ```json
 {
-  "street" : "Jalan apa",
-  "city" : "Kota",
-  "province" : "provinsi",
-  "country" : "Negara",
-  "postalCode" : "12313"
+  "street": "Jalan apa",
+  "city": "Kota",
+  "province": "provinsi",
+  "country": "Negara",
+  "postalCode": "12313"
 }
 ```
 
@@ -404,13 +418,13 @@ Response Body (Success) :
 
 ```json
 {
-  "data" : {
-    "id" : "randomstring",
-    "street" : "Jalan apa",
-    "city" : "Kota",
-    "province" : "provinsi",
-    "country" : "Negara",
-    "postalCode" : "12313"
+  "data": {
+    "id": "randomstring",
+    "street": "Jalan apa",
+    "city": "Kota",
+    "province": "provinsi",
+    "country": "Negara",
+    "postalCode": "12313"
   }
 }
 ```
@@ -419,7 +433,7 @@ Response Body (Failed) :
 
 ```json
 {
-  "errors" : "Address is not found"
+  "errors": "Address is not found"
 }
 ```
 
@@ -435,13 +449,13 @@ Response Body (Success) :
 
 ```json
 {
-  "data" : {
-    "id" : "randomstring",
-    "street" : "Jalan apa",
-    "city" : "Kota",
-    "province" : "provinsi",
-    "country" : "Negara",
-    "postalCode" : "12313"
+  "data": {
+    "id": "randomstring",
+    "street": "Jalan apa",
+    "city": "Kota",
+    "province": "provinsi",
+    "country": "Negara",
+    "postalCode": "12313"
   }
 }
 ```
@@ -450,7 +464,7 @@ Response Body (Failed) :
 
 ```json
 {
-  "errors" : "Address is not found"
+  "errors": "Address is not found"
 }
 ```
 
@@ -466,7 +480,7 @@ Response Body (Success) :
 
 ```json
 {
-  "data" : "OK"
+  "data": "OK"
 }
 ```
 
@@ -474,7 +488,7 @@ Response Body (Failed) :
 
 ```json
 {
-  "errors" : "Address is not found"
+  "errors": "Address is not found"
 }
 ```
 
@@ -507,6 +521,6 @@ Response Body (Failed) :
 
 ```json
 {
-  "errors" : "Contact is not found"
+  "errors": "Contact is not found"
 }
 ```

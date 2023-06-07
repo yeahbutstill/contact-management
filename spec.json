@@ -49,12 +49,90 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateUserRequest"
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "yeahbutstill",
+                    "maxLength": 100,
+                    "minLength": 1
+                  },
+                  "password": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "sangatsangatrahasia",
+                    "maxLength": 100,
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "Dani",
+                    "maxLength": 100,
+                    "minLength": 1
+                  }
+                }
+              },
+              "examples": {
+                "yeahbutstill": {
+                  "value": {
+                    "username": "yeahbutstill",
+                    "password": "sangatsangatrahasia",
+                    "name": "Dani"
+                  }
+                },
+                "maya": {
+                  "value": {
+                    "username": "mayamayayaya",
+                    "password": "sangatsangatrahasia",
+                    "name": "Maya"
+                  }
+                }
               }
             }
           }
         },
         "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "string",
+                      "nullable": false,
+                      "required": true,
+                      "default": "OK"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "string",
+                      "nullable": false,
+                      "required": true,
+                      "default": "Username must not blank, ???"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -64,6 +142,53 @@
         "description": "Get current user login",
         "operationId": "",
         "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "username": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "yeahbutstill"
+                        },
+                        "name": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "Dani"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "string",
+                      "nullable": false,
+                      "required": true,
+                      "default": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       },
       "patch": {
@@ -75,12 +200,91 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateUserRequest"
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "Dani",
+                    "maxLength": 100,
+                    "minLength": 1
+                  },
+                  "password": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "sangatsangatrahasia",
+                    "maxLength": 100,
+                    "minLength": 1
+                  }
+                }
+              },
+              "examples": {
+                "yeahbutstill": {
+                  "value": {
+                    "name": "Dani",
+                    "password": "newpassword"
+                  }
+                },
+                "maya": {
+                  "value": {
+                    "name": "Maya",
+                    "password": "newpassword"
+                  }
+                }
               }
             }
           }
         },
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "username": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "yeahbutstill"
+                        },
+                        "name": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "Dani"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "string",
+                      "nullable": false,
+                      "required": true,
+                      "default": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -94,12 +298,91 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginUserRequest"
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "yeahbutstill",
+                    "maxLength": 100,
+                    "minLength": 1
+                  },
+                  "password": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "sangatsangatrahasia",
+                    "maxLength": 100,
+                    "minLength": 1
+                  }
+                }
+              },
+              "examples": {
+                "yeahbutstill": {
+                  "value": {
+                    "username": "yeahbutstill",
+                    "password": "sangatsangatrahasia"
+                  }
+                },
+                "maya": {
+                  "value": {
+                    "username": "mayamayayaya",
+                    "password": "sangatsangatrahasia"
+                  }
+                }
               }
             }
           }
         },
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "TOKEN"
+                        },
+                        "expiredAt": {
+                          "type": "integer",
+                          "nullable": false,
+                          "required": true,
+                          "default": 234234242342
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "string",
+                      "nullable": false,
+                      "required": true,
+                      "default": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -109,6 +392,24 @@
         "description": "Logout user",
         "operationId": "",
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "string",
+                      "nullable": false,
+                      "required": true,
+                      "default": "OK"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -117,7 +418,142 @@
         "summary": "Create new contact",
         "description": "Create new contact",
         "operationId": "",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "Maya",
+                    "maxLength": 100,
+                    "minLength": 1
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "Sangatsangatrahasia",
+                    "maxLength": 100,
+                    "minLength": 1
+                  },
+                  "email": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "sangat@gmail",
+                    "maxLength": 100,
+                    "minLength": 1
+                  },
+                  "phone": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "0987654321",
+                    "maxLength": 13,
+                    "minLength": 10
+                  }
+                }
+              },
+              "examples": {
+                "yeahbutstill": {
+                  "value": {
+                    "firstName": "Dani",
+                    "lastName": "Se",
+                    "email": "yeahbutstill@gmail",
+                    "phone": "0987654321"
+                  }
+                },
+                "maya": {
+                  "value": {
+                    "firstName": "Maya",
+                    "lastName": "Sangatsangatrahasia",
+                    "email": "sangat@gmail",
+                    "phone": "0987654322"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "random.string.uuid"
+                        },
+                        "firstName": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "Maya",
+                          "maxLength": 100,
+                          "minLength": 1
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "Sangatsangatrahasia",
+                          "maxLength": 100,
+                          "minLength": 1
+                        },
+                        "email": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "sangat@gmail",
+                          "maxLength": 100,
+                          "minLength": 1
+                        },
+                        "phone": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "0987654321",
+                          "maxLength": 13,
+                          "minLength": 10
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "string",
+                      "nullable": false,
+                      "required": true,
+                      "default": "Email format invalid, phone formar invalid, ..."
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       },
       "get": {
@@ -136,6 +572,14 @@
               "default": false,
               "maxLength": 100,
               "minLength": 1
+            },
+            "examples": {
+              "maya": {
+                "value": "Maya"
+              },
+              "dani": {
+                "value": "Dani"
+              }
             }
           },
           {
@@ -149,6 +593,14 @@
               "default": false,
               "maxLength": 100,
               "minLength": 1
+            },
+            "examples": {
+              "maya": {
+                "value": "maya@gmail.com"
+              },
+              "dani": {
+                "value": "dani@gmail.com"
+              }
             }
           },
           {
@@ -162,6 +614,14 @@
               "default": false,
               "maxLength": 13,
               "minLength": 10
+            },
+            "examples": {
+              "maya": {
+                "value": "0987654321"
+              },
+              "dani": {
+                "value": "0987654322"
+              }
             }
           },
           {
@@ -188,6 +648,102 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "name : String, contact first name or last name, using like query, optional\nphone : String, contact phone, using like query, optional\nemail : String, contact email, using like query, optional\npage : Integer, start from 0, default 0\nsize : Integer, default 10",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "nullable": false,
+                            "required": true,
+                            "default": "random.string.uuid"
+                          },
+                          "firstName": {
+                            "type": "string",
+                            "nullable": false,
+                            "required": true,
+                            "default": "Maya",
+                            "maxLength": 100,
+                            "minLength": 1
+                          },
+                          "lastName": {
+                            "type": "string",
+                            "nullable": false,
+                            "required": true,
+                            "default": "Sangatsangatrahasia",
+                            "maxLength": 100,
+                            "minLength": 1
+                          },
+                          "email": {
+                            "type": "string",
+                            "nullable": false,
+                            "required": true,
+                            "default": "sangat@gmail",
+                            "maxLength": 100,
+                            "minLength": 1
+                          },
+                          "phone": {
+                            "type": "string",
+                            "nullable": false,
+                            "required": true,
+                            "default": "0987654321",
+                            "maxLength": 13,
+                            "minLength": 10
+                          }
+                        }
+                      }
+                    },
+                    "paging": {
+                      "type": "object",
+                      "properties": {
+                        "currentPage": {
+                          "type": "integer",
+                          "nullable": false,
+                          "default": 0
+                        },
+                        "totalPage": {
+                          "type": "integer",
+                          "nullable": false,
+                          "default": 10
+                        },
+                        "size": {
+                          "type": "integer",
+                          "nullable": false,
+                          "default": 10
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "string",
+                      "nullable": false,
+                      "required": true,
+                      "default": "Email format invalid, phone formar invalid, ..."
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -196,6 +752,68 @@
         "summary": "Update contact",
         "description": "Update contact",
         "operationId": "",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "MayaNew",
+                    "maxLength": 100,
+                    "minLength": 1
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "SangatsangatrahasiaNew",
+                    "maxLength": 100,
+                    "minLength": 1
+                  },
+                  "email": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "sangat@gmailNew",
+                    "maxLength": 100,
+                    "minLength": 1
+                  },
+                  "phone": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "09876543211",
+                    "maxLength": 13,
+                    "minLength": 10
+                  }
+                }
+              },
+              "examples": {
+                "maya": {
+                  "value": {
+                    "firstName": "MayaNew",
+                    "lastName": "SangatsangatrahasiaNew",
+                    "email": "sangat@gmailNew",
+                    "phone": "09876543211"
+                  }
+                },
+                "dani": {
+                  "value": {
+                    "firstName": "DaniNew",
+                    "lastName": "SangatsangatrahasiaNew",
+                    "email": "sangat2@gmailNew",
+                    "phone": "09876543212"
+                  }
+                }
+              }
+            }
+          }
+        },
         "parameters": [
           {
             "name": "contactId",
@@ -207,10 +825,89 @@
               "nullable": false,
               "maxLength": 100,
               "minLength": 1
+            },
+            "examples": {
+              "maya": {
+                "value": "sdasd-12312-1asdasd"
+              },
+              "dani": {
+                "value": "bdasd-22222-vvvdasd"
+              }
             }
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "random.string.uuid",
+                          "maxLength": 100,
+                          "minLength": 1
+                        },
+                        "firstName": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "MayaNew"
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "SangatsangatrahasiaNew"
+                        },
+                        "email": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "sangat@gmailNew",
+                          "maxLength": 100,
+                          "minLength": 1
+                        },
+                        "phone": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "09876543211",
+                          "maxLength": 13,
+                          "minLength": 10
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "string",
+                      "nullable": false,
+                      "required": true,
+                      "default": "Email format invalid, phone formar invalid, ..."
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       },
       "delete": {
@@ -228,10 +925,51 @@
               "nullable": false,
               "maxLength": 100,
               "minLength": 1
+            },
+            "examples": {
+              "maya": {
+                "value": "sdasd-12312-1asdasd"
+              }
             }
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "string",
+                      "nullable": false,
+                      "required": true,
+                      "default": "OK"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "string",
+                      "nullable": false,
+                      "required": true,
+                      "default": "Contact not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       },
       "get": {
@@ -249,10 +987,82 @@
               "nullable": false,
               "maxLength": 100,
               "minLength": 1
+            },
+            "examples": {
+              "maya": {
+                "value": "sdasd-12312-1asdasd"
+              }
             }
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "random.string.uuid",
+                          "maxLength": 100,
+                          "minLength": 1
+                        },
+                        "firstName": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "MayaNew"
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "SangatsangatrahasiaNew"
+                        },
+                        "email": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "sangat@gmailNew"
+                        },
+                        "phone": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "09876543211"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "string",
+                      "nullable": false,
+                      "required": true,
+                      "default": "Contact not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -261,6 +1071,68 @@
         "summary": "Create new contact address",
         "description": "Create new address",
         "operationId": "",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "street": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "JL. nama jalan"
+                  },
+                  "city": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "Jakarta"
+                  },
+                  "province": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "DKI Jakarta"
+                  },
+                  "country": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "Indonesia"
+                  },
+                  "postalCode": {
+                    "type": "string",
+                    "nullable": false,
+                    "required": true,
+                    "default": "12345"
+                  }
+                }
+              },
+              "examples": {
+                "maya": {
+                  "value": {
+                    "street": "JL. nama jalan",
+                    "city": "Jakarta",
+                    "province": "DKI Jakarta",
+                    "country": "Indonesia",
+                    "postalCode": "12345"
+                  }
+                },
+                "dani": {
+                  "value": {
+                    "street": "JL. nama jalan",
+                    "city": "Jakarta",
+                    "province": "DKI Jakarta",
+                    "country": "Indonesia",
+                    "postalCode": "12345"
+                  }
+                }
+              }
+            }
+          }
+        },
         "parameters": [
           {
             "name": "contactId",
@@ -272,10 +1144,86 @@
               "nullable": false,
               "maxLength": 100,
               "minLength": 1
+            },
+            "examples": {
+              "maya": {
+                "value": "sdasd-12312-1asdasd"
+              }
             }
           }
         ],
         "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "random.string.uuid"
+                        },
+                        "street": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "JL. nama jalan"
+                        },
+                        "city": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "Jakarta"
+                        },
+                        "province": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "DKI Jakarta"
+                        },
+                        "country": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "Indonesia"
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "12345"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "string",
+                      "nullable": false,
+                      "required": true,
+                      "default": "Contact not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       },
       "get": {
@@ -293,10 +1241,89 @@
               "nullable": false,
               "maxLength": 100,
               "minLength": 1
+            },
+            "examples": {
+              "maya": {
+                "value": "sdasd-12312-1asdasd"
+              }
             }
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "nullable": false,
+                            "required": true,
+                            "default": "random.string.uuid"
+                          },
+                          "street": {
+                            "type": "string",
+                            "nullable": false,
+                            "required": true,
+                            "default": "JL. nama jalan"
+                          },
+                          "city": {
+                            "type": "string",
+                            "nullable": false,
+                            "required": true,
+                            "default": "Jakarta"
+                          },
+                          "province": {
+                            "type": "string",
+                            "nullable": false,
+                            "required": true,
+                            "default": "DKI Jakarta"
+                          },
+                          "country": {
+                            "type": "string",
+                            "nullable": false,
+                            "required": true,
+                            "default": "Indonesia"
+                          },
+                          "postalCode": {
+                            "type": "string",
+                            "nullable": false,
+                            "required": true,
+                            "default": "12345"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "string",
+                      "nullable": false,
+                      "required": true,
+                      "default": "Contact not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -316,6 +1343,11 @@
               "nullable": false,
               "maxLength": 100,
               "minLength": 1
+            },
+            "examples": {
+              "maya": {
+                "value": "sdasd-12312-1asdasd"
+              }
             }
           },
           {
@@ -328,10 +1360,86 @@
               "nullable": false,
               "maxLength": 100,
               "minLength": 1
+            },
+            "examples": {
+              "maya": {
+                "value": "sdasd-12312-1asdasd"
+              }
             }
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "random.string.uuid"
+                        },
+                        "street": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "JL. nama jalan"
+                        },
+                        "city": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "Jakarta"
+                        },
+                        "province": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "DKI Jakarta"
+                        },
+                        "country": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "Indonesia"
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "12345"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "string",
+                      "nullable": false,
+                      "required": true,
+                      "default": "Contact not found or address not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       },
       "delete": {
@@ -349,6 +1457,11 @@
               "nullable": false,
               "maxLength": 100,
               "minLength": 1
+            },
+            "examples": {
+              "maya": {
+                "value": "sdasd-12312-1asdasd"
+              }
             }
           },
           {
@@ -361,16 +1474,117 @@
               "nullable": false,
               "maxLength": 100,
               "minLength": 1
+            },
+            "examples": {
+              "maya": {
+                "value": "sdasd-12312-1asdasd"
+              }
             }
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "string",
+                      "nullable": false,
+                      "required": true,
+                      "default": "OK"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "string",
+                      "nullable": false,
+                      "required": true,
+                      "default": "Contact not found or address not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       },
       "put": {
         "summary": "Update contact address",
         "description": "Update address",
         "operationId": "",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "street": {
+                    "type": "object",
+                    "properties": {
+                      "street": {
+                        "type": "string",
+                        "nullable": false,
+                        "required": true,
+                        "default": "JL. nama jalan"
+                      },
+                      "city": {
+                        "type": "string",
+                        "nullable": false,
+                        "required": true,
+                        "default": "Jakarta"
+                      },
+                      "province": {
+                        "type": "string",
+                        "nullable": false,
+                        "required": true,
+                        "default": "DKI Jakarta"
+                      },
+                      "country": {
+                        "type": "string",
+                        "nullable": false,
+                        "required": true,
+                        "default": "Indonesia"
+                      },
+                      "postalCode": {
+                        "type": "string",
+                        "nullable": false,
+                        "required": true,
+                        "default": "12345"
+                      }
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "maya": {
+                  "value": {
+                    "street": {
+                      "street": "JL. nama jalan",
+                      "city": "Jakarta",
+                      "province": "DKI Jakarta",
+                      "country": "Indonesia",
+                      "postalCode": "12345"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "parameters": [
           {
             "name": "contactId",
@@ -382,6 +1596,11 @@
               "nullable": false,
               "maxLength": 100,
               "minLength": 1
+            },
+            "examples": {
+              "maya": {
+                "value": "sdasd-12312-1asdasd"
+              }
             }
           },
           {
@@ -394,19 +1613,88 @@
               "nullable": false,
               "maxLength": 100,
               "minLength": 1
+            },
+            "examples": {
+              "maya": {
+                "value": "sdasd-12312-1asdasd"
+              }
             }
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "random.string.uuid"
+                        },
+                        "street": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "JL. nama jalan"
+                        },
+                        "city": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "Jakarta"
+                        },
+                        "province": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "DKI Jakarta"
+                        },
+                        "country": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "Indonesia"
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "nullable": false,
+                          "required": true,
+                          "default": "12345"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "string",
+                      "nullable": false,
+                      "required": true,
+                      "default": "Contact not found or address not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
-    }
-  },
-  "components": {
-    "schemas": {
-      "CreateUserRequest": {},
-      "UpdateUserRequest": {},
-      "LoginUserRequest": {}
     }
   }
 }
