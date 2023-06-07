@@ -1,45 +1,45 @@
 ### Register
 
-POST http://localhost:8181/api/users
+POST http://localhost:8181/api/v1/users
 Accept: application/json
 Content-Type: application/json
 
 {
-  "username": "yeahbutstill",
+  "username": "yeahbutstillmaya",
   "password": "rahasial",
   "name": "Dani"
 }
 
 ### Login
-POST localhost:8181/api/auth/login
+POST localhost:8181/api/v1/auth/login
 Accept: application/json
 Content-Type: application/json
 
 {
-  "username": "yeahbutstill",
+  "username": "yeahbutstillmaya",
   "password": "rahasial"
 }
 
 ### Get User
-GET localhost:8181/api/users/current
+GET localhost:8181/api/v1/users/current
 Accept: application/json
-X-API-TOKEN:f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+X-API-TOKEN:b57aaded-48ed-44de-a7ed-18c41e2c4cae
 
 ### Update User
-PATCH localhost:8181/api/users/current
+PATCH localhost:8181/api/v1/users/current
 Accept: application/json
 Content-Type: application/json
-X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+X-API-TOKEN: b57aaded-48ed-44de-a7ed-18c41e2c4cae
 
 {
   "name": "Dani Setiawan"
 }
 
 ### Create Contact
-POST localhost:8181/api/contacts
+POST localhost:8181/api/v1/contacts
 Accept: application/json
 Content-Type: application/json
-X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+X-API-TOKEN: b57aaded-48ed-44de-a7ed-18c41e2c4cae
 
 {
   "firstName": "Pipit3",
@@ -49,25 +49,25 @@ X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
 }
 
 ### List Contact
-GET localhost:8181/api/contacts
+GET localhost:8181/api/v1/contacts
 Accept: application/json
-X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+X-API-TOKEN: b57aaded-48ed-44de-a7ed-18c41e2c4cae
 
 ### Search Contact
-GET localhost:8181/api/contacts?name=Yasmin
+GET localhost:8181/api/v1/contacts?name=Pipit3
 Accept: application/json
-X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+X-API-TOKEN: b57aaded-48ed-44de-a7ed-18c41e2c4cae
 
 ### Get Contact Detail
-GET localhost:8181/api/contacts/cc5cc01a-635a-44ca-8c8b-f2b0b8094363
+GET localhost:8181/api/v1/contacts/4d6e2e76-d265-4169-a2ec-ff0b3ea65e42
 Accept: application/json
-X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+X-API-TOKEN: b57aaded-48ed-44de-a7ed-18c41e2c4cae
 
 ### Update Contact
-PUT localhost:8181/api/contacts/cc5cc01a-635a-44ca-8c8b-f2b0b8094363
+PUT localhost:8181/api/v1/contacts/4d6e2e76-d265-4169-a2ec-ff0b3ea65e42
 Accept: application/json
 Content-Type: application/json
-X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+X-API-TOKEN: b57aaded-48ed-44de-a7ed-18c41e2c4cae
 
 {
   "firstName": "Yasmin",
@@ -77,15 +77,15 @@ X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
 }
 
 ### Remove Contact
-DELETE localhost:8181/api/contacts/871be6ce-d030-49fa-ae20-41a0e8e5a6e4
+DELETE localhost:8181/api/v1/contacts/46380ed9-110b-4d1a-b262-980a2e28a86f
 Accept: application/json
-X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+X-API-TOKEN: b57aaded-48ed-44de-a7ed-18c41e2c4cae
 
 ### Add Address
-POST localhost:8181/api/contacts/cc5cc01a-635a-44ca-8c8b-f2b0b8094363/addresses
+POST localhost:8181/api/v1/contacts/4d6e2e76-d265-4169-a2ec-ff0b3ea65e42/addresses
 Accept: application/json
 Content-Type: application/json
-X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+X-API-TOKEN: b57aaded-48ed-44de-a7ed-18c41e2c4cae
 
 {
   "street": "Jalan",
@@ -96,25 +96,25 @@ X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
 }
 
 ### List Address
-GET localhost:8181/api/contacts/cc5cc01a-635a-44ca-8c8b-f2b0b8094363/addresses
+GET localhost:8181/api/v1/contacts/4d6e2e76-d265-4169-a2ec-ff0b3ea65e42/addresses
 Accept: application/json
-X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+X-API-TOKEN: b57aaded-48ed-44de-a7ed-18c41e2c4cae
 
 ### Update Address
-PUT localhost:8181/api/contacts/cc5cc01a-635a-44ca-8c8b-f2b0b8094363/addresses/69cf8e15-f399-4bc6-a52c-a38feaf7cb10
+PUT localhost:8181/api/v1/contacts/4d6e2e76-d265-4169-a2ec-ff0b3ea65e42/addresses/406c31cc-3b7c-4884-add3-caca786d1701
 Accept: application/json
 Content-Type: application/json
-X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+X-API-TOKEN: b57aaded-48ed-44de-a7ed-18c41e2c4cae
 
 {
-  "street": "Jalan Kemiri Jaya",
-  "city": "Depok",
-  "province": "Jawa Barat",
-  "country": "Indonesia",
-  "postalCode": "16320"
+  "street": "Jalan Kemiri Jaya Aja Nih",
+  "city": "Depok 1",
+  "province": "Jawa Barat 1",
+  "country": "Indonesia 1",
+  "postalCode": "163201"
 }
 
 ### Remove Address
-DELETE localhost:8181/api/contacts/cc5cc01a-635a-44ca-8c8b-f2b0b8094363/addresses/69cf8e15-f399-4bc6-a52c-a38feaf7cb10
+DELETE localhost:8181/api/v1/contacts/4d6e2e76-d265-4169-a2ec-ff0b3ea65e42/addresses/406c31cc-3b7c-4884-add3-caca786d1701
 Accept: application/json
-X-API-TOKEN: f9c569ac-bebf-42c1-8810-0acbd91dc1f1
+X-API-TOKEN: b57aaded-48ed-44de-a7ed-18c41e2c4cae
