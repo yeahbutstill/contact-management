@@ -16,7 +16,7 @@ docker run --rm -it -p 8080:8080 -v $PWD:/data/project/ jetbrains/qodana-jvm --s
 
 ## Register User
 
-Endpoint : POST /api/users
+Endpoint : POST /api/v1/users
 
 Request Body :
 
@@ -46,7 +46,7 @@ Response Body (Failed) :
 
 ## Login User
 
-Endpoint : POST /api/auth/login
+Endpoint : POST /api/v1/auth/login
 
 Request Body :
 
@@ -71,7 +71,7 @@ Response Body (Success) :
 
 ## Logout User
 
-Endpoint : DELETE /api/auth/logout
+Endpoint : DELETE /api/v1/auth/logout
 
 Request Header :
 
@@ -87,7 +87,7 @@ Response Body (Success) :
 
 ## Get User
 
-Endpoint : GET /api/users/current
+Endpoint : GET /api/v1/users/current
 
 Request Header :
 
@@ -114,7 +114,7 @@ Response Body (Failed, 401) :
 
 ## Update User
 
-Endpoint : PATCH /api/users/current
+Endpoint : PATCH /api/v1/users/current
 
 Request Header :
 
@@ -152,7 +152,7 @@ Response Body (Failed, 401) :
 
 ## Logout User
 
-Endpoint : DELETE /api/auth/logout
+Endpoint : DELETE /api/v1/auth/logout
 
 Request Header :
 
@@ -170,7 +170,7 @@ Response Body (Success) :
 
 ## Create Contact
 
-Endpoint : POST /api/contacts
+Endpoint : POST /api/v1/contacts
 
 Request Header :
 
@@ -211,7 +211,7 @@ Response Body (Failed) :
 
 ## Update Contact
 
-Endpoint : PUT /api/contacts/{idContact}
+Endpoint : PUT /api/v1/contacts/{idContact}
 
 Request Header :
 
@@ -252,7 +252,7 @@ Response Body (Failed) :
 
 ## Get Contact
 
-Endpoint : GET /api/contacts/{idContact}
+Endpoint : GET /api/v1/contacts/{idContact}
 
 Request Header :
 
@@ -282,7 +282,7 @@ Response Body (Failed, 404) :
 
 ## Search Contact
 
-Endpoint : GET /api/contacts
+Endpoint : GET /api/v1/contacts
 
 Query Param :
 
@@ -327,7 +327,7 @@ Response Body (Failed) :
 
 ## Remove Contact
 
-Endpoint : DELETE /api/contacts/{idContact}
+Endpoint : DELETE /api/v1/contacts/{idContact}
 
 Request Header :
 
@@ -353,7 +353,7 @@ Response Body (Failed) :
 
 ## Create Address
 
-Endpoint : POST /api/contacts/{idContact}/addresses
+Endpoint : POST /api/v1/contacts/{idContact}/addresses
 
 Request Header :
 
@@ -396,7 +396,7 @@ Response Body (Failed) :
 
 ## Update Address
 
-Endpoint : PUT /api/contacts/{idContact}/addresses/{idAddress}
+Endpoint : PUT /api/v1/contacts/{idContact}/addresses/{idAddress}
 
 Request Header :
 
@@ -439,7 +439,7 @@ Response Body (Failed) :
 
 ## Get Address
 
-Endpoint : GET /api/contacts/{idContact}/addresses/{idAddress}
+Endpoint : GET /api/v1/contacts/{idContact}/addresses/{idAddress}
 
 Request Header :
 
@@ -470,7 +470,7 @@ Response Body (Failed) :
 
 ## Remove Address
 
-Endpoint : DELETE /api/contacts/{idContact}/addresses/{idAddress}
+Endpoint : DELETE /api/v1/contacts/{idContact}/addresses/{idAddress}
 
 Request Header :
 
@@ -494,7 +494,7 @@ Response Body (Failed) :
 
 ## List Address
 
-Endpoint : GET /api/contacts/{idContact}/addresses
+Endpoint : GET /api/v1/contacts/{idContact}/addresses
 
 Request Header :
 
