@@ -6,6 +6,14 @@
 docker run --rm --name restful-api-contact-management -e POSTGRES_DB=contact_management_db -e POSTGRES_USER=dani -e POSTGRES_PASSWORD=dani -e PGDATA=/var/lib/postgresql/data/pgdata -v "$PWD/restful-api-contact-management-data:/var/lib/postgresql/data" -p 5432:5432 postgres:15
 ```
 
+## Login psql
+
+```shell
+psql -h 127.0.0.1 -U dani contact_management_db
+\x ## Expanded display is on. like \G on MySQL
+select * from flyway_schema_history;
+```
+
 ## Run Qodana
 
 ```shell
