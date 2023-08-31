@@ -1,0 +1,10 @@
+stages:
+  - build
+  - deploy
+
+compile-dan-test:
+  stages: build
+  script: mvn clean package
+  artifacts:
+    paths:
+      - target/*jar
