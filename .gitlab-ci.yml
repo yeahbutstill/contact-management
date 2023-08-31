@@ -11,7 +11,7 @@ compile-dan-test:
     POSTGRES_DB: contact_management_db
     POSTGRES_USER: dani
     POSTGRES_PASSWORD: dani
-    SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/contact_management_db
+    SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql/contact_management_db
   script: mvn clean package
   artifacts:
     paths:
