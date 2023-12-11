@@ -2,6 +2,11 @@
 
 ## Run Container PostgreSQL
 
+jalan kan compose.yaml
+![img.png](img.png)
+
+atau dengan command line ini, tapi hapus dulu dependency spring-boot-composer yang ada di pom.xml
+
 ```shell
 docker run --rm --name restful-api-contact-management -e POSTGRES_DB=contact_management_db -e POSTGRES_USER=dani -e POSTGRES_PASSWORD=dani -e PGDATA=/var/lib/postgresql/data/pgdata -v "$PWD/restful-api-contact-management-data:/var/lib/postgresql/data" -p 5432:5432 postgres:15
 ```
