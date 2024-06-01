@@ -1,6 +1,10 @@
 # Contact Management
 
 ## Run Container PostgreSQL
+Kalau terkena Connection refused saat menjalankan Apps Spring boot, ini karena si Docker itu seolah-olah jalan di computer lain atau Virtual Machine jadi portnya itu tidak kelihatan dari si laptop.
+Maka dari itu kita harus mengluarkan port tersebut atau mengexposenya.
+https://software.endy.muhardin.com/linux/intro-docker
+
 
 jalan kan compose.yaml
 ![img.png](img.png)

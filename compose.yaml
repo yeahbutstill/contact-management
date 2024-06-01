@@ -1,10 +1,19 @@
 services:
-  postgres:
-    image: 'postgres:15-alpine'
+  postgresdb:
+    image: 'postgres:16.3-alpine3.20'
+    restart: always
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    # or set shared memory limit when deploy via swarm stack
+    #volumes:
+    #  - type: tmpfs
+    #    target: /dev/shm
+    #    tmpfs:
+    #      size: 134217728 # 128*2^20 bytes = 128Mb
     environment:
       - 'POSTGRES_DB=contact_management_db'
-      - 'POSTGRES_PASSWORD=dani'
-      - 'POSTGRES_USER=dani'
+      - 'POSTGRES_USER=zvZnK2CJAo0Xw'
+      - 'POSTGRES_PASSWORD=nljMTxE2XU1Zp'
       - 'PGDATA=/var/lib/postgresql/data/pgdata'
     volumes:
       - '$PWD/restful-api-contact-management-data:/var/lib/postgresql/data'
