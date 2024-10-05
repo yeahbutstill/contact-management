@@ -15,8 +15,46 @@ atau dengan command line ini, tapi hapus dulu dependency spring-boot-composer ya
 docker run --rm --name restful-api-contact-management -e POSTGRES_DB=contact_management_db -e POSTGRES_USER=dani -e POSTGRES_PASSWORD=dani -e PGDATA=/var/lib/postgresql/data/pgdata -v "$PWD/restful-api-contact-management-data:/var/lib/postgresql/data" -p 5432:5432 postgres:15
 ```
 
-## Login psql
+## Jalankan Vault
+```shell
+# Masuk ke container vault
+docker exec -it contact-management-vault-1 sh 
+export VAULT_ADDR='http://127.0.0.1:8288'
+export VAULT_TOKEN='root-token-for-dev-purpose-only'
+```
 
+## Jalankan Terraform
+Buka terminal baru
+```shell
+cd tf-provisioner
+terraform init
+terraform apply
+```
+
+## Baca Secret, Root-ID, tulis Secret-ID
+Balik lagi ke terminal container vault
+```shell
+vault kv get secret/aplikasi/contact-management
+
+# jalankan ini ambil datanya untuk nanti dimasukan ke application.properties
+vault read auth/approle/role/jawasundapadangbetawi/role-id
+vault write -force auth/approle/role/jawasundapadangbetawi/secret-id
+
+# masuk ke application.properties lalu isi role-id dan secret-id
+# spring.cloud.vault.app-role.role-id=b830f1e1-63fc-0ce5-46e1-21f79c048513
+# spring.cloud.vault.app-role.secret-id=48e63ee2-f596-6e2f-cebe-466251dae922
+```
+
+
+## Login psql
+masuk ke container DB nya
+```shell
+docker exec -it contact-management-db-contact-management-1 sh
+psql -U dani -d contact_management_db
+select * from flyway_schema_history;
+```
+
+Atau kalau sudah install client PSQL bisa pakai ini:
 ```shell
 psql -h 127.0.0.1 -U dani contact_management_db
 \x ## Expanded display is on. like \G on MySQL

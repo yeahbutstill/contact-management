@@ -34,3 +34,4 @@ build/
 
 ### Docker ###
 /restful-api-contact-management-data/
+/db-contact-management/
