@@ -33,5 +33,8 @@ build/
 .vscode/
 
 ### Docker ###
-/restful-api-contact-management-data/
-/db-contact-management/
+restful-api-contact-management-data/
+db-contact-management/
+
+### Vault ###
+src/main/resources/application-vault.properties
