@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: konfigurasi-app-contact-management
+data:
+  database_name: "contact_management_db"
+  database_jdbc_url: "jdbc:postgresql://service-db-contact-management/contact_management_db"

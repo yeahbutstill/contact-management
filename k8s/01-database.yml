@@ -1,0 +1,113 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-db-contact-management
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-db-contact-management
+  labels:
+    app: contact-management
+    tier: db
+    stage: dev
+    ver: v2024070905
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: contact-management
+      tier: db
+      stage: dev
+      ver: v2024070905
+  template:
+    metadata:
+      labels:
+        app: contact-management
+        tier: db
+        stage: dev
+        ver: v2024070905
+    spec:
+      serviceAccountName: sa-contact-management
+      containers:
+        - name: container-db-contact-management
+          image: postgres:16.3-alpine3.20
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: konfigurasi-app-contact-management
+                  key: database_name
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: secret-contact-management
+                  key: database_username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-contact-management
+                  key: database_password
+            - name: PGDATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: konfigurasi-app-contact-management
+                  key: database_name
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: secret-contact-management
+                  key: database_username
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-contact-management
+                  key: database_password
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: vol-db-contact-management
+              mountPath: "/var/lib/postgresql/data"
+            - name: secret-dari-vault
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+          livenessProbe:
+            exec:
+              command: ["pg_isready", "-h", "127.0.0.1", "-p", "5432"]
+          readinessProbe:
+            exec:
+              command: ["psql", "-h", "127.0.0.1", "-p", "5432", "-c", "SELECT 1"]
+      volumes:
+        - name: vol-db-contact-management
+          persistentVolumeClaim:
+            claimName: pvc-db-contact-management
+        - name: secret-dari-vault
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "vault-database"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-db-contact-management
+  labels:
+    app: contact-management
+    tier: db
+    stage: dev
+    ver: v2024070905
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: contact-management
+    tier: db
+    stage: dev
+    ver: v2024070905

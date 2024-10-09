@@ -30,6 +30,7 @@
         <java.version>21</java.version>
         <spring-modulith.version>1.2.4</spring-modulith.version>
         <spring-cloud.version>2023.0.3</spring-cloud.version>
+        <jkube.version>1.17.0</jkube.version>
     </properties>
     <dependencies>
         <dependency>
@@ -208,12 +209,49 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <image>
+                        <name>2819930922/${project.artifactId}</name>
+                    </image>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.jkube</groupId>
+                <artifactId>kubernetes-maven-plugin</artifactId>
+                <version>${jkube.version}</version>
+                <configuration>
+                    <images>
+                        <image>
+                            <name>2819930922/${project.artifactId}</name>
+                        </image>
+                    </images>
+                    <resources>
+                        <labels>
+                            <all>
+                                <property>
+                                    <name>app</name>
+                                    <value>contact-management</value>
+                                </property>
+                                <property>
+                                    <name>tier</name>
+                                    <value>backend</value>
+                                </property>
+                            </all>
+                        </labels>
+                    </resources>
+                    <enricher>
+                        <config>
+                            <jkube-service>
+                                <name>service-backend-contact-management</name>
+                                <port>8080</port>
+                            </jkube-service>
+                        </config>
+                    </enricher>
                 </configuration>
             </plugin>
         </plugins>

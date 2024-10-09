@@ -1,5 +1,6 @@
 # Contact Management
 
+
 ## Run Container PostgreSQL
 Kalau terkena Connection refused saat menjalankan Apps Spring boot, ini karena si Docker itu seolah-olah jalan di computer lain atau Virtual Machine jadi portnya itu tidak kelihatan dari si laptop.
 Maka dari itu kita harus mengluarkan port tersebut atau mengexposenya.
@@ -15,6 +16,7 @@ atau dengan command line ini, tapi hapus dulu dependency spring-boot-composer ya
 docker run --rm --name restful-api-contact-management -e POSTGRES_DB=contact_management_db -e POSTGRES_USER=dani -e POSTGRES_PASSWORD=dani -e PGDATA=/var/lib/postgresql/data/pgdata -v "$PWD/restful-api-contact-management-data:/var/lib/postgresql/data" -p 5432:5432 postgres:15
 ```
 
+# Mode Trusted Orchestrator
 ## Jalankan Vault
 ```shell
 # Masuk ke container vault
@@ -45,6 +47,29 @@ vault write -force auth/approle/role/jawasundapadangbetawi/secret-id
 # spring.cloud.vault.app-role.secret-id=48e63ee2-f596-6e2f-cebe-466251dae922
 ```
 
+Nanti ini diambil dari Vault yang ada di secret saat aplikasi kita jalan
+- spring.datasource.url=jdbc:postgresql://localhost:5432/contact_management_db
+- spring.datasource.username=dani
+- spring.datasource.password=dani
+
+## Run menggunakan secret-id
+```shell
+SPRING_CLOUD_VAULT_APPROLE_ROLEID=e26d0199-34d2-ce03-fc4d-a72f0cf147c3 \
+SPRING_CLOUD_VAULT_APPROLE_SECRETID=2c11b21b-eaaf-c154-72a2-27e3a5cfc591 \
+mvn clean install spring-boot:run
+```
+
+## Run menggunakan token
+generate tokennya dulu di vault container
+```shell
+vault write -wrap-ttl=1m -force auth/approle/role/jawasundapadangbetawi/secret-id
+```
+
+```shell
+SPRING_CLOUD_VAULT_APPROLE_ROLEID=e26d0199-34d2-ce03-fc4d-a72f0cf147c3 \
+SPRING_CLOUD_VAULT_TOKEN=hvs.CAESIDzsjEIkZCneHuDF8I1x0_1d9em1v2OOWJMbPIUgODNCGh4KHGh2cy5uRGk2OUVyRDR6TnBrSm5RaFhsVjhPUlU \
+mvn clean install spring-boot:run
+```
 
 ## Login psql
 masuk ke container DB nya
@@ -54,11 +79,107 @@ psql -U dani -d contact_management_db
 select * from flyway_schema_history;
 ```
 
+
 Atau kalau sudah install client PSQL bisa pakai ini:
 ```shell
 psql -h 127.0.0.1 -U dani contact_management_db
 \x ## Expanded display is on. like \G on MySQL
 select * from flyway_schema_history;
+```
+
+# Mode Trusted Platform
+start kubernet dengan minikube setelah itu tunggu sampe servicenya ready, lalu masuk ke folder k8s setelah itu jalankan ini
+```shell
+# start minikube
+minikube start
+
+# export ENV
+export VAULT_ADDR='http://[::]:8200'
+export VAULT_TOKEN='root'
+
+# init terra dan jalankan teraform ke vult
+cd tf-provisioner
+terraform init
+terraform apply
+
+# create service account
+kubectl create serviceaccount sa-contact-management
+ 
+kubectl apply -f k8s/00-configmap.yml
+kubectl apply -f k8s/00-secret-vault-store.yml
+kubectl apply -f k8s/01-database.yml
+
+# check datanya diikuti dengan nama file setelah strip - jadi "configmap" dan disesuaikan dengan nama filenya
+kubectl get configmap
+
+# check database deployment service
+kubectl get deployments
+```
+
+## Build image menggunakan cloud native build
+```shell
+mvn spring-boot:build-image
+```
+
+## install ke pakcage kubernet
+```shell
+helm install vault hashicorp/vault \
+--set "server.dev.enabled=true" \
+--set "injector.enabled=false" \
+--set "csi.enabled=true" \
+--set='ui.enabled=true' 
+```
+
+## akses UI Vault
+```shell
+kubectl port-forward service/vault-ui 8200:8200
+
+# http://localhost:8200
+```
+lalu Jalankan terraform script yang ada di folder tf-provisioner seperti langkah di atas.
+
+## Masuk ke pod vault
+```shell
+kubectl exec -it vault-0 -- /bin/sh
+
+export VAULT_ADDR='http://[::]:8200'
+
+export VAULT_TOKEN='root'
+
+vault auth enable kubernetes
+
+vault write auth/kubernetes/config \
+    kubernetes_host="https://$KUBERNETES_PORT_443_TCP_ADDR:443"
+
+
+vault write auth/kubernetes/role/database \
+    bound_service_account_names=sa-contact-management \
+    bound_service_account_namespaces=default \
+    policies=applikasi-contact-management-readonly \
+    ttl=20m
+```
+
+## Install the secrets store CSI driver
+```shell
+helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
+
+helm install csi secrets-store-csi-driver/secrets-store-csi-driver \
+    --set syncSecret.enabled=true
+
+## Verify
+kubectl get deployment,pod,svc
+## pastikan statusnya running dan ready 1/1
+
+kubectl describe SecretProviderClass vault-database
+
+## Geser ke ENV minikube image registry
+eval $(minikube docker-env)
+
+## Lanjut build spring boot jadi docker image, kalau udah ada jangan lupa yang lama dihapus dulu
+mvn spring-boot:build-image -Dmaven.test.skip
+
+## Deploy back-end aplikasi
+kubectl apply -f k8s/02-aplikasi.yml
 ```
 
 ## Run Qodana

@@ -3,7 +3,7 @@
 #---------------------
 
 # Create 'contact-management' policy
-resource "vault_policy" "contact-management-readonly" {
-  name   = "contact-management-readonly"
-  policy = file("policies/contact-management-readonly.hcl")
+resource "vault_policy" "applikasi-contact-management-readonly" {
+  name   = "applikasi-contact-management-readonly"
+  policy = file("policies/aplikasi-contact-management-readonly.hcl")
 }

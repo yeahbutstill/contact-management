@@ -1,0 +1,107 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-backend-contact-management
+  labels:
+    app: contact-management
+    tier: backend
+    stage: dev
+    ver: v2024070905
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: contact-management
+      tier: backend
+      stage: dev
+      ver: v2024070905
+  template:
+    metadata:
+      labels:
+        app: contact-management
+        tier: backend
+        stage: dev
+        ver: v2024070905
+    spec:
+      serviceAccountName: sa-contact-management
+      containers:
+      - name: container-backend-contact-management
+        image: 2819930922/contact-management-api:latest
+        imagePullPolicy: Never
+        env:
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: konfigurasi-app-contact-management
+              key: database_jdbc_url
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: secret-contact-management
+              key: database_username
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-contact-management
+              key: database_password
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: secret-dari-vault
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
+        startupProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 2000
+          timeoutSeconds: 30
+          periodSeconds: 30
+          successThreshold: 1
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 90
+          timeoutSeconds: 30
+          periodSeconds: 30
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 60
+          timeoutSeconds: 30
+          periodSeconds: 30
+          successThreshold: 1
+          failureThreshold: 3
+      volumes:
+      - name: secret-dari-vault
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "vault-database"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-backend-contact-management
+  labels:
+    app: contact-management
+    tier: backend
+    stage: dev
+    ver: v2024070905
+spec:
+  ports:
+  - port: 8080
+  selector:
+    app: contact-management
+    tier: backend
+    stage: dev
+    ver: v2024070905
