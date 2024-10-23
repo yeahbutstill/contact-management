@@ -38,7 +38,7 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
      * Resolves a method parameter into an argument value from a given request.
      * A {@link ModelAndViewContainer} provides access to the model for the
      * request. A {@link WebDataBinderFactory} provides a way to create
-     * a {@link WebDataBinder} instance when needed for data binding and
+     * a {@link org.springframework.web.bind.WebDataBinder} instance when needed for data binding and
      * type conversion purposes.
      *
      * @param parameter     the method parameter to resolve. This parameter must
@@ -46,7 +46,7 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
      *                      have returned {@code true}.
      * @param mavContainer  the ModelAndViewContainer for the current request
      * @param webRequest    the current request
-     * @param binderFactory a factory for creating {@link WebDataBinder} instances
+     * @param binderFactory a factory for creating {@link org.springframework.web.bind.WebDataBinder} instances
      * @return the resolved argument value, or {@code null} if not resolvable
      * @throws Exception in case of errors with the preparation of argument values
      */

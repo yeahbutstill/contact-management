@@ -10,6 +10,8 @@ import org.testcontainers.utility.DockerImageName;
 @TestConfiguration(proxyBeanMethods = false)
 public class TestDemoApplication {
 
+    public static final String TESTCONTAINER_HOST_URL = "http://host.testcontainers.internal";
+
     public static void main(String[] args) {
         SpringApplication.from(ContactManagementApiApplication::main).with(TestDemoApplication.class).run(args);
     }
@@ -17,7 +19,7 @@ public class TestDemoApplication {
     @Bean
     @ServiceConnection
     PostgreSQLContainer<?> postgresContainer() {
-        return new PostgreSQLContainer<>(DockerImageName.parse("postgres:15-alpine"));
+        return new PostgreSQLContainer<>(DockerImageName.parse("postgres:16.3-alpine3.20"));
     }
 
 }

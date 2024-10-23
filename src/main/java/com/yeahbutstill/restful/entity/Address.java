@@ -1,8 +1,6 @@
 package com.yeahbutstill.restful.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +16,7 @@ import lombok.Setter;
 public class Address {
 
     @Id
+    @Size(max = 100)
     private String id;
 
     @Size(max = 200)
@@ -29,8 +28,6 @@ public class Address {
     @Size(max = 100)
     private String province;
 
-    @NotBlank
-    @NotEmpty
     @Size(max = 100)
     private String country;
 

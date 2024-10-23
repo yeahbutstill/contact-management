@@ -28,6 +28,13 @@ spec:
       - name: container-backend-contact-management
         image: 2819930922/contact-management-api:latest
         imagePullPolicy: Never
+        resources:
+          requests:
+            memory: 1331Mi     # Maximum memory usage is 1.3 GiB
+            cpu: 600m          # Maximum CPU usage is 60% of 1 CPU core (600 millicores)
+          limits:
+            memory: 2Gi        # Guaranteed 2 GiB of memory
+            cpu: 1000m         # Guaranteed 1 CPU core
         env:
         - name: SPRING_DATASOURCE_URL
           valueFrom:
@@ -55,31 +62,20 @@ spec:
             path: /actuator/health/liveness
             port: 8080
             scheme: HTTP
-          initialDelaySeconds: 2000
-          timeoutSeconds: 30
-          periodSeconds: 30
-          successThreshold: 1
-          failureThreshold: 3
         livenessProbe:
           httpGet:
             path: /actuator/health/liveness
             port: 8080
             scheme: HTTP
-          initialDelaySeconds: 90
-          timeoutSeconds: 30
-          periodSeconds: 30
-          successThreshold: 1
-          failureThreshold: 3
+          initialDelaySeconds: 15
+          periodSeconds: 20
         readinessProbe:
           httpGet:
             path: /actuator/health/readiness
             port: 8080
             scheme: HTTP
-          initialDelaySeconds: 60
-          timeoutSeconds: 30
-          periodSeconds: 30
-          successThreshold: 1
-          failureThreshold: 3
+          initialDelaySeconds: 5
+          periodSeconds: 10
       volumes:
       - name: secret-dari-vault
         csi:
@@ -87,6 +83,7 @@ spec:
           readOnly: true
           volumeAttributes:
             secretProviderClass: "vault-database"
+
 ---
 apiVersion: v1
 kind: Service
@@ -105,3 +102,18 @@ spec:
     tier: backend
     stage: dev
     ver: v2024070905
+
+---
+# The following is responsible for the autoscaling.
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: deployment-backend-contact-management
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: deployment-backend-contact-management
+    apiVersion: apps/v1
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 60

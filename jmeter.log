@@ -1,0 +1,22 @@
+2024-10-22 22:03:00,912 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2024-10-22 22:03:00,951 INFO o.a.j.JMeter: Loading user properties from: /home/dnl/.sdkman/candidates/jmeter/5.6/bin/user.properties
+2024-10-22 22:03:00,953 INFO o.a.j.JMeter: Loading system properties from: /home/dnl/.sdkman/candidates/jmeter/5.6/bin/system.properties
+2024-10-22 22:03:00,962 INFO o.a.j.JMeter: Copyright (c) 1998-2023 The Apache Software Foundation
+2024-10-22 22:03:00,963 INFO o.a.j.JMeter: Version 5.6
+2024-10-22 22:03:00,963 INFO o.a.j.JMeter: java.version=21.0.4
+2024-10-22 22:03:00,963 INFO o.a.j.JMeter: java.vm.name=Java HotSpot(TM) 64-Bit Server VM
+2024-10-22 22:03:00,963 INFO o.a.j.JMeter: os.name=Linux
+2024-10-22 22:03:00,963 INFO o.a.j.JMeter: os.arch=amd64
+2024-10-22 22:03:00,964 INFO o.a.j.JMeter: os.version=6.10.6-200.fc40.x86_64
+2024-10-22 22:03:00,964 INFO o.a.j.JMeter: file.encoding=UTF-8
+2024-10-22 22:03:00,964 INFO o.a.j.JMeter: java.awt.headless=null
+2024-10-22 22:03:00,964 INFO o.a.j.JMeter: Max memory     =1073741824
+2024-10-22 22:03:00,964 INFO o.a.j.JMeter: Available Processors =8
+2024-10-22 22:03:00,987 INFO o.a.j.JMeter: Default Locale=English (EN)
+2024-10-22 22:03:00,987 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2024-10-22 22:03:00,988 INFO o.a.j.JMeter: JMeterHome=/home/dnl/.sdkman/candidates/jmeter/5.6
+2024-10-22 22:03:00,988 INFO o.a.j.JMeter: user.dir  =/home/dnl/IdeaProjects/contact-management
+2024-10-22 22:03:00,988 INFO o.a.j.JMeter: PWD       =/home/dnl/IdeaProjects/contact-management
+2024-10-22 22:03:00,989 INFO o.a.j.JMeter: IP: 192.168.1.17 Name: fedora FullName: fedora
+2024-10-22 22:03:01,029 INFO o.a.j.JMeter: Loaded icon properties from org/apache/jmeter/images/icon.properties
+2024-10-22 22:03:01,938 INFO o.a.j.JMeterGuiLauncher: Setting LAF to: com.github.weisj.darklaf.DarkLaf:com.github.weisj.darklaf.theme.DarculaTheme

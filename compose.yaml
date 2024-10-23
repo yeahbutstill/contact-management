@@ -30,3 +30,5 @@ services:
       VAULT_DEV_ROOT_TOKEN_ID: 'root-token-for-dev-purpose-only'
     ports:
       - '8288:8288'
+    expose:
+      - '8288'

@@ -121,6 +121,18 @@ kubectl get deployments
 mvn spring-boot:build-image
 ```
 
+## Menggunakan mode kubernetes auth
+```shell
+# start minikube
+minikube start
+
+# export ENV
+export VAULT_ADDR='http://[::]:8200'
+export VAULT_TOKEN='root'
+
+# create service account
+kubectl create serviceaccount sa-contact-management
+```
 ## install ke pakcage kubernet
 ```shell
 helm install vault hashicorp/vault \
@@ -136,14 +148,13 @@ kubectl port-forward service/vault-ui 8200:8200
 
 # http://localhost:8200
 ```
-lalu Jalankan terraform script yang ada di folder tf-provisioner seperti langkah di atas.
+
 
 ## Masuk ke pod vault
 ```shell
 kubectl exec -it vault-0 -- /bin/sh
 
 export VAULT_ADDR='http://[::]:8200'
-
 export VAULT_TOKEN='root'
 
 vault auth enable kubernetes
@@ -157,6 +168,11 @@ vault write auth/kubernetes/role/database \
     bound_service_account_namespaces=default \
     policies=applikasi-contact-management-readonly \
     ttl=20m
+    
+    
+exit
+```
+```shell
 ```
 
 ## Install the secrets store CSI driver
@@ -178,7 +194,18 @@ eval $(minikube docker-env)
 ## Lanjut build spring boot jadi docker image, kalau udah ada jangan lupa yang lama dihapus dulu
 mvn spring-boot:build-image -Dmaven.test.skip
 
-## Deploy back-end aplikasi
+# init terra dan jalankan teraform ke vult
+cd tf-provisioner
+terraform init
+terraform apply
+
+# create service account
+kubectl create serviceaccount sa-contact-management
+
+## Deploy
+kubectl apply -f k8s/00-configmap.yml
+kubectl apply -f k8s/00-secret-vault-store.yml
+kubectl apply -f k8s/01-database.yml
 kubectl apply -f k8s/02-aplikasi.yml
 ```
 
