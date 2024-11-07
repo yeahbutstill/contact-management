@@ -1,6 +1,6 @@
 services:
   db-contact-management:
-    image: 'postgres:16.3-alpine3.20'
+    image: 'postgres:16'
     restart: always
     # set shared memory limit when using docker-compose
     shm_size: 128mb
