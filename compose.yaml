@@ -19,9 +19,7 @@ services:
       - '$PWD/db-contact-management:/var/lib/postgresql/data'
     ports:
       - '5432:5432'
-    expose:
-      - '5432'
-
+    
   vault:
     image: hashicorp/vault
     restart: always
@@ -30,5 +28,4 @@ services:
       VAULT_DEV_ROOT_TOKEN_ID: 'root-token-for-dev-purpose-only'
     ports:
       - '8288:8288'
-    expose:
-      - '8288'
+    
